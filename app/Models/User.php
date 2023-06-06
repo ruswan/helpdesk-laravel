@@ -1,45 +1,90 @@
 <?php
 
+/**
+ * Created by Reliese Model.
+ */
+
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
+use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
-class User extends Authenticatable
+/**
+ * Class User
+ *
+ * @property int $id
+ * @property int|null $unit_id
+ * @property string $name
+ * @property string $email
+ * @property Carbon|null $email_verified_at
+ * @property string|null $password
+ * @property string|null $two_factor_secret
+ * @property string|null $two_factor_recovery_codes
+ * @property Carbon|null $two_factor_confirmed_at
+ * @property string|null $remember_token
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
+ * @property string|null $identity
+ * @property string|null $phone
+ * @property int|null $user_level_id
+ * @property bool $is_active
+ * @property string|null $deleted_at
+ *
+ * @property Unit|null $unit
+ * @property Collection|Comment[] $comments
+ * @property Collection|Ticket[] $tickets
+ *
+ * @package App\Models
+ */
+class User extends Model
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use SoftDeletes;
+    protected $table = 'users';
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
-    protected $fillable = [
-        'name',
-        'email',
-        'password',
+    protected $casts = [
+        'unit_id' => 'int',
+        'email_verified_at' => 'datetime',
+        'two_factor_confirmed_at' => 'datetime',
+        'user_level_id' => 'int',
+        'is_active' => 'bool'
     ];
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array<int, string>
-     */
     protected $hidden = [
         'password',
-        'remember_token',
+        'two_factor_secret',
+        'remember_token'
     ];
 
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, string>
-     */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-        'password' => 'hashed',
+    protected $fillable = [
+        'unit_id',
+        'name',
+        'email',
+        'email_verified_at',
+        'password',
+        'two_factor_secret',
+        'two_factor_recovery_codes',
+        'two_factor_confirmed_at',
+        'remember_token',
+        'identity',
+        'phone',
+        'user_level_id',
+        'is_active'
     ];
+
+    public function unit()
+    {
+        return $this->belongsTo(Unit::class);
+    }
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
+
+    public function tickets()
+    {
+        return $this->hasMany(Ticket::class, 'responsible_id');
+    }
 }
