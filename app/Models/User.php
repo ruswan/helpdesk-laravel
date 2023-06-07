@@ -7,9 +7,11 @@
 namespace App\Models;
 
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Filament\Models\Contracts\FilamentUser;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
 /**
  * Class User
@@ -38,7 +40,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  *
  * @package App\Models
  */
-class User extends Model
+class User extends Authenticatable implements FilamentUser
 {
     use SoftDeletes;
     protected $table = 'users';
@@ -86,5 +88,10 @@ class User extends Model
     public function tickets()
     {
         return $this->hasMany(Ticket::class, 'responsible_id');
+    }
+
+    public function canAccessFilament(): bool
+    {
+        return true;
     }
 }
