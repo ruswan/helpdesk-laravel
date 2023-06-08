@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\TicketResource\Pages;
 use App\Filament\Resources\TicketResource\RelationManagers;
+use App\Models\ProblemCategory;
 use App\Models\Ticket;
 use App\Models\TicketPriorities;
 use App\Models\Unit;
@@ -31,24 +32,53 @@ class TicketResource extends Resource
                         ->pluck('name', 'id'))
                     ->searchable()
                     ->required(),
+
                 Forms\Components\Select::make('unit_id')
                     ->label(__('Work Unit'))
                     ->options(Unit::all()
                         ->pluck('name', 'id'))
                     ->searchable()
+                    ->required()
+                    ->afterStateUpdated(function ($state, callable $get, callable $set) {
+                        $unit = Unit::find($state);
+                        if ($unit) {
+                            $problemCategoryId = (int) $get('problem_category_id');
+                            if ($problemCategoryId && $problemCategory = ProblemCategory::find($problemCategoryId)) {
+                                if ($problemCategory->unit_id !== $unit->id) {
+                                    $set('problem_category_id', null);
+                                }
+                            }
+                        }
+                    })
+                    ->reactive(),
+
+                Forms\Components\Select::make('problem_category_id')
+                    ->label(__('Problem Category'))
+                    ->options(function (callable $get, callable $set) {
+                        $unit = Unit::find($get('unit_id'));
+                        if ($unit) {
+                            return $unit->problemCategories->pluck('name', 'id');
+                        }
+                        return ProblemCategory::all()->pluck('name', 'id');
+                    })
+                    ->searchable()
                     ->required(),
-                Forms\Components\TextInput::make('problem_category_id')
-                    ->required(),
+
                 Forms\Components\TextInput::make('ticket_statuses_id')
                     ->required(),
+
                 Forms\Components\TextInput::make('responsible_id'),
+
                 Forms\Components\TextInput::make('title')
                     ->required()
                     ->maxLength(255),
+
                 Forms\Components\RichEditor::make('description')
                     ->required()
                     ->maxLength(65535),
+
                 Forms\Components\DateTimePicker::make('approved_at'),
+
                 Forms\Components\DateTimePicker::make('solved_at'),
             ]);
     }
