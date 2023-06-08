@@ -33,7 +33,7 @@ class Unit extends Model
         'name'
     ];
 
-    public function problem_categories()
+    public function problemCategories()
     {
         return $this->hasMany(ProblemCategory::class);
     }
