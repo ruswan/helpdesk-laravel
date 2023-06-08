@@ -6,15 +6,16 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * Class Unit
- * 
+ *
  * @property int $id
  * @property string $name
- * 
+ *
  * @property Collection|ProblemCategory[] $problem_categories
  * @property Collection|Ticket[] $tickets
  * @property Collection|User[] $users
@@ -23,25 +24,27 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Unit extends Model
 {
-	protected $table = 'units';
-	public $timestamps = false;
+    use SoftDeletes;
 
-	protected $fillable = [
-		'name'
-	];
+    protected $table = 'units';
+    public $timestamps = false;
 
-	public function problem_categories()
-	{
-		return $this->hasMany(ProblemCategory::class);
-	}
+    protected $fillable = [
+        'name'
+    ];
 
-	public function tickets()
-	{
-		return $this->hasMany(Ticket::class);
-	}
+    public function problemCategories()
+    {
+        return $this->hasMany(ProblemCategory::class);
+    }
 
-	public function users()
-	{
-		return $this->hasMany(User::class);
-	}
+    public function tickets()
+    {
+        return $this->hasMany(Ticket::class);
+    }
+
+    public function users()
+    {
+        return $this->hasMany(User::class);
+    }
 }

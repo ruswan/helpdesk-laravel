@@ -101,4 +101,14 @@ class Ticket extends Model
     {
         return $this->hasMany(Comment::class, 'tiket_id');
     }
+
+    /**
+     * Get the ticketPriorities that owns the Ticket
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function ticketPriorities()
+    {
+        return $this->belongsTo(TicketPriorities::class);
+    }
 }
