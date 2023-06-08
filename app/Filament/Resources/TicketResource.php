@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\TicketResource\Pages;
 use App\Filament\Resources\TicketResource\RelationManagers;
 use App\Models\Ticket;
+use App\Models\TicketPriorities;
 use Filament\Forms;
 use Filament\Resources\Form;
 use Filament\Resources\Resource;
@@ -24,7 +25,10 @@ class TicketResource extends Resource
         return $form
             ->schema([
                 Forms\Components\Select::make('priority_id')
-                    ->label(__('Priority')),
+                    ->label(__('Priority'))
+                    ->options(TicketPriorities::all()
+                        ->pluck('name', 'id'))
+                    ->searchable(),
                 Forms\Components\TextInput::make('unit_id')
                     ->required(),
                 Forms\Components\TextInput::make('problem_category_id')
