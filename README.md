@@ -23,3 +23,19 @@ Feel free to explore this repository and start building a robust and responsive 
 * Web Server (eg: Apache, Nginx, IIS)
 
 <hr/>
+
+## Installation
+
+* Install [Composer](https://getcomposer.org/download)
+* Clone the repository: `git clone https://github.com/ruswan/laravel_helpdesk.git`
+* Install PHP dependencies: `composer install`
+* Setup configuration: `cp .env.example .env`
+* Generate application key: `php artisan key:generate`
+* Create a database and update your configuration.
+* Run database migration: `php artisan migrate`
+* Run permission migration: `php artisan permissions:sync -C`
+* Run database seeder: `php artisan db:seed`
+* Create a symlink to the storage: `php artisan storage:link`
+* Run the dev server: `php artisan serve`
+
+<hr/>
