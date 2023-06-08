@@ -7,7 +7,9 @@ use App\Filament\Resources\TicketResource\RelationManagers;
 use App\Models\ProblemCategory;
 use App\Models\Ticket;
 use App\Models\TicketPriorities;
+use App\Models\TicketStatus;
 use App\Models\Unit;
+use App\Models\User;
 use Filament\Forms;
 use Filament\Resources\Form;
 use Filament\Resources\Resource;
@@ -64,10 +66,21 @@ class TicketResource extends Resource
                     ->searchable()
                     ->required(),
 
-                Forms\Components\TextInput::make('ticket_statuses_id')
-                    ->required(),
+                Forms\Components\Select::make('ticket_statuses_id')
+                    ->label(__('Status'))
+                    ->options(TicketStatus::all()
+                        ->pluck('name', 'id'))
+                    ->searchable()
+                    ->required()
+                    ->hiddenOn('create'),
 
-                Forms\Components\TextInput::make('responsible_id'),
+                Forms\Components\Select::make('responsible_id')
+                    ->label(__('Responsible'))
+                    ->options(User::all()
+                        ->pluck('name', 'id'))
+                    ->searchable()
+                    ->required()
+                    ->hiddenOn('create'),
 
                 Forms\Components\TextInput::make('title')
                     ->required()
@@ -77,9 +90,11 @@ class TicketResource extends Resource
                     ->required()
                     ->maxLength(65535),
 
-                Forms\Components\DateTimePicker::make('approved_at'),
+                Forms\Components\DateTimePicker::make('approved_at')
+                    ->hiddenOn('create'),
 
-                Forms\Components\DateTimePicker::make('solved_at'),
+                Forms\Components\DateTimePicker::make('solved_at')
+                    ->hiddenOn('create'),
             ]);
     }
 
