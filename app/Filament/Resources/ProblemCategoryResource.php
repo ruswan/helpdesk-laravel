@@ -2,27 +2,34 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\UnitResource\Pages;
-use App\Filament\Resources\UnitResource\RelationManagers;
-use App\Models\Unit;
 use Filament\Forms;
-use Filament\Resources\Form;
-use Filament\Resources\Resource;
-use Filament\Resources\Table;
+use App\Models\Unit;
 use Filament\Tables;
+use Filament\Resources\Form;
+use Filament\Resources\Table;
+use App\Models\ProblemCategory;
+use Filament\Resources\Resource;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use App\Filament\Resources\ProblemCategoryResource\Pages;
+use App\Filament\Resources\ProblemCategoryResource\RelationManagers;
 
-class UnitResource extends Resource
+class ProblemCategoryResource extends Resource
 {
-    protected static ?string $model = Unit::class;
+    protected static ?string $model = ProblemCategory::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-briefcase';
+    protected static ?string $navigationIcon = 'heroicon-o-link';
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
+                Forms\Components\Select::make('unit_id')
+                    ->label(__('Work Unit'))
+                    ->options(Unit::all()
+                        ->pluck('name', 'id'))
+                    ->searchable()
+                    ->required(),
                 Forms\Components\TextInput::make('name')
                     ->required()
                     ->maxLength(255),
@@ -33,6 +40,7 @@ class UnitResource extends Resource
     {
         return $table
             ->columns([
+                Tables\Columns\TextColumn::make('unit.name'),
                 Tables\Columns\TextColumn::make('name'),
             ])
             ->filters([
@@ -59,10 +67,10 @@ class UnitResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListUnits::route('/'),
-            'create' => Pages\CreateUnit::route('/create'),
-            'view' => Pages\ViewUnit::route('/{record}'),
-            'edit' => Pages\EditUnit::route('/{record}/edit'),
+            'index' => Pages\ListProblemCategories::route('/'),
+            'create' => Pages\CreateProblemCategory::route('/create'),
+            'view' => Pages\ViewProblemCategory::route('/{record}'),
+            'edit' => Pages\EditProblemCategory::route('/{record}/edit'),
         ];
     }
 

@@ -17,6 +17,8 @@ return new class extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('unit_id')->index('unit_id');
             $table->string('name');
+            $table->timestamps();
+            $table->softDeletes();
         });
     }
 
