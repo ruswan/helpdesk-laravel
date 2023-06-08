@@ -9,14 +9,16 @@
     "license": "MIT",
     "require": {
         "php": "^8.1",
+        "althinect/filament-spatie-roles-permissions": "^1.2",
         "filament/filament": "^2.0",
         "guzzlehttp/guzzle": "^7.2",
         "laravel/framework": "^10.10",
         "laravel/sanctum": "^3.2",
         "laravel/tinker": "^2.8",
-        "phpsa/filament-authentication": "^2.4"
+        "stechstudio/filament-impersonate": "^2.18"
     },
     "require-dev": {
+        "doctrine/dbal": "^3.6",
         "fakerphp/faker": "^1.9.1",
         "kitloong/laravel-migrations-generator": "^6.10",
         "laravel/pint": "^1.0",

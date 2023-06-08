@@ -2,26 +2,26 @@
 
 namespace App\Policies;
 
-use App\Models\User;
-use Spatie\Permission\Models\Role;
 use Illuminate\Auth\Access\Response;
+use App\Models\Comment;
+use App\Models\User;
 
-class RolePolicy
+class CommentPolicy
 {
     /**
      * Determine whether the user can view any models.
      */
     public function viewAny(User $user): bool
     {
-        return $user->can('view-any Role');
+        return $user->can('view-any Comment');
     }
 
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, Role $Role): bool
+    public function view(User $user, Comment $comment): bool
     {
-        return $user->can('view Role');
+        return $user->can('view Comment');
     }
 
     /**
@@ -29,38 +29,38 @@ class RolePolicy
      */
     public function create(User $user): bool
     {
-        return $user->can('create Role');
+        return $user->can('create Comment');
     }
 
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, Role $Role): bool
+    public function update(User $user, Comment $comment): bool
     {
-        return $user->can('update Role');
+        return $user->can('update Comment');
     }
 
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, Role $Role): bool
+    public function delete(User $user, Comment $comment): bool
     {
-        return $user->can('delete Role');
+        return $user->can('delete Comment');
     }
 
     /**
      * Determine whether the user can restore the model.
      */
-    public function restore(User $user, Role $Role): bool
+    public function restore(User $user, Comment $comment): bool
     {
-        return $user->can('restore Role');
+        return $user->can('restore Comment');
     }
 
     /**
      * Determine whether the user can permanently delete the model.
      */
-    public function forceDelete(User $user, Role $Role): bool
+    public function forceDelete(User $user, Comment $comment): bool
     {
-        return $user->can('force-delete Role');
+        return $user->can('force-delete Comment');
     }
 }
