@@ -6,6 +6,7 @@ use App\Filament\Resources\TicketResource\Pages;
 use App\Filament\Resources\TicketResource\RelationManagers;
 use App\Models\Ticket;
 use App\Models\TicketPriorities;
+use App\Models\Unit;
 use Filament\Forms;
 use Filament\Resources\Form;
 use Filament\Resources\Resource;
@@ -28,8 +29,13 @@ class TicketResource extends Resource
                     ->label(__('Priority'))
                     ->options(TicketPriorities::all()
                         ->pluck('name', 'id'))
-                    ->searchable(),
-                Forms\Components\TextInput::make('unit_id')
+                    ->searchable()
+                    ->required(),
+                Forms\Components\Select::make('unit_id')
+                    ->label(__('Work Unit'))
+                    ->options(Unit::all()
+                        ->pluck('name', 'id'))
+                    ->searchable()
                     ->required(),
                 Forms\Components\TextInput::make('problem_category_id')
                     ->required(),
