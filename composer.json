@@ -17,6 +17,7 @@
         "laravel/tinker": "^2.8"
     },
     "require-dev": {
+        "doctrine/dbal": "^3.6",
         "fakerphp/faker": "^1.9.1",
         "kitloong/laravel-migrations-generator": "^6.10",
         "laravel/pint": "^1.0",
