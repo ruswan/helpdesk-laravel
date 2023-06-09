@@ -25,6 +25,7 @@ class UserSeeder extends Seeder
         $adminUnit = User::factory()->create([
             'name' => 'Admin Unit',
             'email' => 'adminunit@example.com',
+            'unit_id' => 1,
         ]);
         $adminUnit->syncRoles('Admin Unit');
 
@@ -32,6 +33,7 @@ class UserSeeder extends Seeder
         $staffUnit = User::factory()->create([
             'name' => 'Staff Unit',
             'email' => 'staffunit@example.com',
+            'unit_id' => 1,
         ]);
         $staffUnit->syncRoles('Staff Unit');
     }
