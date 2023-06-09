@@ -6,7 +6,7 @@ use App\Filament\Resources\TicketResource\Pages;
 use App\Filament\Resources\TicketResource\RelationManagers;
 use App\Models\ProblemCategory;
 use App\Models\Ticket;
-use App\Models\TicketPriorities;
+use App\Models\Priority;
 use App\Models\TicketStatus;
 use App\Models\Unit;
 use App\Models\User;
@@ -30,7 +30,7 @@ class TicketResource extends Resource
             ->schema([
                 Forms\Components\Select::make('priority_id')
                     ->label(__('Priority'))
-                    ->options(TicketPriorities::all()
+                    ->options(Priority::all()
                         ->pluck('name', 'id'))
                     ->searchable()
                     ->required(),
@@ -102,24 +102,11 @@ class TicketResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('priority_id'),
-                Tables\Columns\TextColumn::make('unit_id'),
-                Tables\Columns\TextColumn::make('owner_id'),
-                Tables\Columns\TextColumn::make('problem_category_id'),
-                Tables\Columns\TextColumn::make('ticket_statuses_id'),
-                Tables\Columns\TextColumn::make('responsible_id'),
                 Tables\Columns\TextColumn::make('title'),
-                Tables\Columns\TextColumn::make('description'),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime(),
-                Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime(),
-                Tables\Columns\TextColumn::make('approved_at')
-                    ->dateTime(),
-                Tables\Columns\TextColumn::make('solved_at')
-                    ->dateTime(),
-                Tables\Columns\TextColumn::make('deleted_at')
-                    ->dateTime(),
+                Tables\Columns\TextColumn::make('problemCategory.name'),
+                Tables\Columns\TextColumn::make('ticketStatus.name'),
             ])
             ->filters([
                 Tables\Filters\TrashedFilter::make(),

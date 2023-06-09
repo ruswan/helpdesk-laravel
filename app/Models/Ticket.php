@@ -87,12 +87,12 @@ class Ticket extends Model
         return $this->belongsTo(User::class, 'responsible_id');
     }
 
-    public function problem_category()
+    public function problemCategory()
     {
         return $this->belongsTo(ProblemCategory::class);
     }
 
-    public function ticket_status()
+    public function ticketStatus()
     {
         return $this->belongsTo(TicketStatus::class, 'ticket_statuses_id');
     }
@@ -100,15 +100,5 @@ class Ticket extends Model
     public function comments()
     {
         return $this->hasMany(Comment::class, 'tiket_id');
-    }
-
-    /**
-     * Get the ticketPriorities that owns the Ticket
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function ticketPriorities()
-    {
-        return $this->belongsTo(TicketPriorities::class);
     }
 }
