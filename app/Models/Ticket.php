@@ -87,12 +87,12 @@ class Ticket extends Model
         return $this->belongsTo(User::class, 'responsible_id');
     }
 
-    public function problem_category()
+    public function problemCategory()
     {
         return $this->belongsTo(ProblemCategory::class);
     }
 
-    public function ticket_status()
+    public function ticketStatus()
     {
         return $this->belongsTo(TicketStatus::class, 'ticket_statuses_id');
     }

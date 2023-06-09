@@ -102,24 +102,11 @@ class TicketResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('priority_id'),
-                Tables\Columns\TextColumn::make('unit_id'),
-                Tables\Columns\TextColumn::make('owner_id'),
-                Tables\Columns\TextColumn::make('problem_category_id'),
-                Tables\Columns\TextColumn::make('ticket_statuses_id'),
-                Tables\Columns\TextColumn::make('responsible_id'),
                 Tables\Columns\TextColumn::make('title'),
-                Tables\Columns\TextColumn::make('description'),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime(),
-                Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime(),
-                Tables\Columns\TextColumn::make('approved_at')
-                    ->dateTime(),
-                Tables\Columns\TextColumn::make('solved_at')
-                    ->dateTime(),
-                Tables\Columns\TextColumn::make('deleted_at')
-                    ->dateTime(),
+                Tables\Columns\TextColumn::make('problemCategory.name'),
+                Tables\Columns\TextColumn::make('ticketStatus.name'),
             ])
             ->filters([
                 Tables\Filters\TrashedFilter::make(),
