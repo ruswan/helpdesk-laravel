@@ -2,21 +2,21 @@
 
 namespace Database\Seeders;
 
-use App\Models\TicketPriorities;
+use App\Models\Priority;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class TicketPrioritiesSeeder extends Seeder
+class PrioritySeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        TicketPriorities::create(['id' => TicketPriorities::CRITICAL, 'name' => 'Critical/Urgent']);
-        TicketPriorities::create(['id' => TicketPriorities::HIGHT, 'name' => 'High']);
-        TicketPriorities::create(['id' => TicketPriorities::MEDIUM, 'name' => 'Medium']);
-        TicketPriorities::create(['id' => TicketPriorities::LOW, 'name' => 'Low']);
-        TicketPriorities::create(['id' => TicketPriorities::ENHANCEMENT, 'name' => 'Enhancement/Feature Request']);
+        Priority::create(['id' => Priority::CRITICAL, 'name' => 'Critical/Urgent']);
+        Priority::create(['id' => Priority::HIGHT, 'name' => 'High']);
+        Priority::create(['id' => Priority::MEDIUM, 'name' => 'Medium']);
+        Priority::create(['id' => Priority::LOW, 'name' => 'Low']);
+        Priority::create(['id' => Priority::ENHANCEMENT, 'name' => 'Enhancement/Feature Request']);
     }
 }
