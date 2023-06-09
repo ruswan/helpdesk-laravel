@@ -17,8 +17,10 @@ class DatabaseSeeder extends Seeder
             RoleSeeder::class,
             UnitSeeder::class,
             UserSeeder::class,
-            TicketPrioritiesSeeder::class,
+            PrioritySeeder::class,
             TicketStatusSeeder::class,
+            ProblemCategoryMigration::class,
+            TicketSeeder::class,
         ]);
     }
 }

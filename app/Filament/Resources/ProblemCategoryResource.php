@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\ProblemCategoryResource\Pages;
 use App\Filament\Resources\ProblemCategoryResource\RelationManagers;
+use App\Filament\Resources\ProblemCategoryResource\RelationManagers\TicketsRelationManager;
 
 class ProblemCategoryResource extends Resource
 {
@@ -63,7 +64,7 @@ class ProblemCategoryResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            TicketsRelationManager::class,
         ];
     }
 
