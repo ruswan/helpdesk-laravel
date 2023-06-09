@@ -6,7 +6,7 @@ use App\Filament\Resources\TicketResource\Pages;
 use App\Filament\Resources\TicketResource\RelationManagers;
 use App\Models\ProblemCategory;
 use App\Models\Ticket;
-use App\Models\TicketPriorities;
+use App\Models\Priority;
 use App\Models\TicketStatus;
 use App\Models\Unit;
 use App\Models\User;
@@ -30,7 +30,7 @@ class TicketResource extends Resource
             ->schema([
                 Forms\Components\Select::make('priority_id')
                     ->label(__('Priority'))
-                    ->options(TicketPriorities::all()
+                    ->options(Priority::all()
                         ->pluck('name', 'id'))
                     ->searchable()
                     ->required(),
