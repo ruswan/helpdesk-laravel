@@ -13,7 +13,7 @@ class ProblemCategoryPolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->can('view-any ProblemCategory');
+        return $user->hasRole('Admin Unit');
     }
 
     /**
@@ -21,7 +21,7 @@ class ProblemCategoryPolicy
      */
     public function view(User $user, ProblemCategory $problemcategory): bool
     {
-        return $user->can('view ProblemCategory');
+        return $user->unit_id == $problemcategory->unit_id;
     }
 
     /**
@@ -29,7 +29,7 @@ class ProblemCategoryPolicy
      */
     public function create(User $user): bool
     {
-        return $user->can('create ProblemCategory');
+        return $this->viewAny($user);
     }
 
     /**
@@ -37,7 +37,7 @@ class ProblemCategoryPolicy
      */
     public function update(User $user, ProblemCategory $problemcategory): bool
     {
-        return $user->can('update ProblemCategory');
+        return $this->view($user, $problemcategory);
     }
 
     /**
@@ -45,7 +45,7 @@ class ProblemCategoryPolicy
      */
     public function delete(User $user, ProblemCategory $problemcategory): bool
     {
-        return $user->can('delete ProblemCategory');
+        return $this->view($user, $problemcategory);
     }
 
     /**
@@ -53,7 +53,7 @@ class ProblemCategoryPolicy
      */
     public function restore(User $user, ProblemCategory $problemcategory): bool
     {
-        return $user->can('restore ProblemCategory');
+        return $this->view($user, $problemcategory);
     }
 
     /**
@@ -61,6 +61,6 @@ class ProblemCategoryPolicy
      */
     public function forceDelete(User $user, ProblemCategory $problemcategory): bool
     {
-        return $user->can('force-delete ProblemCategory');
+        return $this->view($user, $problemcategory);
     }
 }
