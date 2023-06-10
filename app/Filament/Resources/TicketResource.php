@@ -146,6 +146,11 @@ class TicketResource extends Resource
                 SoftDeletingScope::class,
             ])
             ->where(function($query){
+
+                if(auth()->user()->hasRole('Super Admin')){
+                    return true;
+                }
+
                 if(auth()->user()->hasRole('Admin Unit')){
                     $query->where('tickets.unit_id',  auth()->user()->unit_id)->orWhere('tickets.owner_id',  auth()->id());
                 }elseif(auth()->user()->hasRole('Staff Unit')){
