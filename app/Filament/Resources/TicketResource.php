@@ -144,6 +144,15 @@ class TicketResource extends Resource
         return parent::getEloquentQuery()
             ->withoutGlobalScopes([
                 SoftDeletingScope::class,
-            ]);
+            ])
+            ->where(function($query){
+                if(auth()->user()->hasRole('Admin Unit')){
+                    $query->where('tickets.unit_id',  auth()->user()->unit_id)->orWhere('tickets.owner_id',  auth()->id());
+                }elseif(auth()->user()->hasRole('Staff Unit')){
+                    $query->where('tickets.responsible_id',  auth()->id())->orWhere('tickets.owner_id',  auth()->id());
+                }else{
+                    $query->where('tickets.owner_id',  auth()->id());
+                }
+            });
     }
 }
