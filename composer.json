@@ -18,6 +18,7 @@
         "stechstudio/filament-impersonate": "^2.18"
     },
     "require-dev": {
+        "barryvdh/laravel-debugbar": "^3.8",
         "doctrine/dbal": "^3.6",
         "fakerphp/faker": "^1.9.1",
         "kitloong/laravel-migrations-generator": "^6.10",
