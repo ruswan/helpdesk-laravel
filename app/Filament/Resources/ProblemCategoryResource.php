@@ -83,6 +83,10 @@ class ProblemCategoryResource extends Resource
         return parent::getEloquentQuery()
             ->withoutGlobalScopes([
                 SoftDeletingScope::class,
-            ]);
+            ])->where(function($query){
+                if(auth()->user()->hasRole('Admin Unit')){
+                    $query->where('problem_categories.unit_id',  auth()->user()->unit_id);
+                }
+            });
     }
 }
