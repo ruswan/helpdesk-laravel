@@ -14,14 +14,14 @@ class TicketStatusSeeder extends Seeder
     public function run(): void
     {
         TicketStatus::insert([
-            ['name' => 'Open'],
-            ['name' => 'Assigned'],
-            ['name' => 'In Progress'],
-            ['name' => 'On Hold'],
-            ['name' => 'Escalated'],
-            ['name' => 'Pending Customer Response'],
-            ['name' => 'Resolved'],
-            ['name' => 'Closed'],
+            ['id' => TicketStatus::OPEN, 'name' => 'Open'],
+            ['id' => TicketStatus::ASSIGNED, 'name' => 'Assigned'],
+            ['id' => TicketStatus::IN_PROGRESS, 'name' => 'In Progress'],
+            ['id' => TicketStatus::ON_HOLD, 'name' => 'On Hold'],
+            ['id' => TicketStatus::ESCALATED, 'name' => 'Escalated'],
+            ['id' => TicketStatus::PENDING_CUSTOMER_RESPONSE, 'name' => 'Pending Customer Response'],
+            ['id' => TicketStatus::RESOLVED, 'name' => 'Resolved'],
+            ['id' => TicketStatus::CLOSED, 'name' => 'Closed'],
         ]);
     }
 }

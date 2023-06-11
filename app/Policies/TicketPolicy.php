@@ -4,6 +4,7 @@ namespace App\Policies;
 
 use Illuminate\Auth\Access\Response;
 use App\Models\Ticket;
+use App\Models\TicketStatus;
 use App\Models\User;
 
 class TicketPolicy
@@ -13,7 +14,7 @@ class TicketPolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->can('view-any Ticket');
+        return true;
     }
 
     /**
@@ -21,7 +22,18 @@ class TicketPolicy
      */
     public function view(User $user, Ticket $ticket): bool
     {
-        return $user->can('view Ticket');
+        // The admin unit can view tickets that are assigned to their specific unit.
+        if ($user->hasRole('Admin Unit')) {
+            return $user->id == $ticket->owner_id || $ticket->unit_id == $user->unit_id;
+        }
+
+        // The staff unit can view tickets that have been assigned to them.
+        if ($user->hasRole('Staff Unit')) {
+            return $user->id == $ticket->owner_id ||  $ticket->responsible_id == $user->id;
+        }
+
+        // The user can view their own ticket
+        return $user->id == $ticket->owner_id;
     }
 
     /**
@@ -29,7 +41,7 @@ class TicketPolicy
      */
     public function create(User $user): bool
     {
-        return $user->can('create Ticket');
+        return true;
     }
 
     /**
@@ -37,7 +49,7 @@ class TicketPolicy
      */
     public function update(User $user, Ticket $ticket): bool
     {
-        return $user->can('update Ticket');
+        return $this->view($user, $ticket);
     }
 
     /**
@@ -45,7 +57,11 @@ class TicketPolicy
      */
     public function delete(User $user, Ticket $ticket): bool
     {
-        return $user->can('delete Ticket');
+        if ($ticket->ticket_statuses_id != TicketStatus::OPEN) {
+            return false;
+        }
+
+        return $user->id == $ticket->owner_id;
     }
 
     /**
@@ -53,7 +69,7 @@ class TicketPolicy
      */
     public function restore(User $user, Ticket $ticket): bool
     {
-        return $user->can('restore Ticket');
+        return $user->id == $ticket->owner_id;
     }
 
     /**
@@ -61,6 +77,6 @@ class TicketPolicy
      */
     public function forceDelete(User $user, Ticket $ticket): bool
     {
-        return $user->can('force-delete Ticket');
+        return $user->id == $ticket->owner_id;
     }
 }

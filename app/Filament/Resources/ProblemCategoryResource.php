@@ -21,6 +21,8 @@ class ProblemCategoryResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-link';
 
+    protected static ?int $navigationSort = 4;
+
     public static function form(Form $form): Form
     {
         return $form
@@ -83,6 +85,10 @@ class ProblemCategoryResource extends Resource
         return parent::getEloquentQuery()
             ->withoutGlobalScopes([
                 SoftDeletingScope::class,
-            ]);
+            ])->where(function ($query) {
+                if (auth()->user()->hasRole('Admin Unit')) {
+                    $query->where('problem_categories.unit_id',  auth()->user()->unit_id);
+                }
+            });
     }
 }

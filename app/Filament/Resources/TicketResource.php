@@ -24,6 +24,8 @@ class TicketResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-ticket';
 
+    protected static ?int $navigationSort = 3;
+
     public static function form(Form $form): Form
     {
         return $form
@@ -119,7 +121,8 @@ class TicketResource extends Resource
                 Tables\Actions\DeleteBulkAction::make(),
                 Tables\Actions\ForceDeleteBulkAction::make(),
                 Tables\Actions\RestoreBulkAction::make(),
-            ]);
+            ])
+            ->defaultSort('created_at', 'desc');;
     }
 
     public static function getRelations(): array
@@ -144,6 +147,20 @@ class TicketResource extends Resource
         return parent::getEloquentQuery()
             ->withoutGlobalScopes([
                 SoftDeletingScope::class,
-            ]);
+            ])
+            ->where(function ($query) {
+
+                if (auth()->user()->hasRole('Super Admin')) {
+                    return true;
+                }
+
+                if (auth()->user()->hasRole('Admin Unit')) {
+                    $query->where('tickets.unit_id',  auth()->user()->unit_id)->orWhere('tickets.owner_id',  auth()->id());
+                } elseif (auth()->user()->hasRole('Staff Unit')) {
+                    $query->where('tickets.responsible_id',  auth()->id())->orWhere('tickets.owner_id',  auth()->id());
+                } else {
+                    $query->where('tickets.owner_id',  auth()->id());
+                }
+            });
     }
 }
