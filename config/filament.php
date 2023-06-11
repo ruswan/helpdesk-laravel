@@ -141,6 +141,7 @@ return [
         'register' => [
             Widgets\AccountWidget::class,
             Widgets\FilamentInfoWidget::class,
+            \Awcodes\Overlook\Overlook::class,
         ],
     ],
 
