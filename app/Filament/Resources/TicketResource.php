@@ -24,6 +24,8 @@ class TicketResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-ticket';
 
+    protected static ?int $navigationSort = 3;
+
     public static function form(Form $form): Form
     {
         return $form
@@ -146,17 +148,17 @@ class TicketResource extends Resource
             ->withoutGlobalScopes([
                 SoftDeletingScope::class,
             ])
-            ->where(function($query){
+            ->where(function ($query) {
 
-                if(auth()->user()->hasRole('Super Admin')){
+                if (auth()->user()->hasRole('Super Admin')) {
                     return true;
                 }
 
-                if(auth()->user()->hasRole('Admin Unit')){
+                if (auth()->user()->hasRole('Admin Unit')) {
                     $query->where('tickets.unit_id',  auth()->user()->unit_id)->orWhere('tickets.owner_id',  auth()->id());
-                }elseif(auth()->user()->hasRole('Staff Unit')){
+                } elseif (auth()->user()->hasRole('Staff Unit')) {
                     $query->where('tickets.responsible_id',  auth()->id())->orWhere('tickets.owner_id',  auth()->id());
-                }else{
+                } else {
                     $query->where('tickets.owner_id',  auth()->id());
                 }
             });
