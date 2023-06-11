@@ -36,5 +36,11 @@ class UserSeeder extends Seeder
             'unit_id' => 1,
         ]);
         $staffUnit->syncRoles('Staff Unit');
+
+        // 4. create a user
+        $staffUnit = User::factory()->create([
+            'name' => 'User',
+            'email' => 'user@example.com',
+        ]);
     }
 }
