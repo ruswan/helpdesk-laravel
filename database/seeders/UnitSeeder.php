@@ -14,9 +14,9 @@ class UnitSeeder extends Seeder
     public function run(): void
     {
         Unit::insert([
-            ['name' => 'Unit One'],
-            ['name' => 'Unit Two'],
-            ['name' => 'Unit Three'],
+            ['name' => 'Sales Department'],
+            ['name' => 'Technical Support'],
+            ['name' => 'Billing Support'],
         ]);
     }
 }
