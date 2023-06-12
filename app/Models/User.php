@@ -93,8 +93,27 @@ class User extends Authenticatable implements FilamentUser
         return $this->hasMany(Ticket::class, 'responsible_id');
     }
 
+    /**
+     * Determine who has access
+     *
+     * All users can access
+     *
+     * @return bool
+     */
     public function canAccessFilament(): bool
     {
         return true;
+    }
+
+    /**
+     * Add scope to display users based on their role
+     *
+     * If the role is as an admin unit, then display the user based on their unit ID.
+     */
+    public function scopeByRole($query)
+    {
+        if (auth()->user()->hasRole('Admin Unit')) {
+            return $query->where('users.unit_id', auth()->user()->unit_id);
+        }
     }
 }
