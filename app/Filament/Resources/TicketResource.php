@@ -151,13 +151,16 @@ class TicketResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('title')
+                    ->translateLabel()
                     ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
+                    ->translateLabel()
                     ->sortable()
                     ->toggleable(),
                 Tables\Columns\TextColumn::make('problemCategory.name')
                     ->searchable()
+                    ->translateLabel()
                     ->toggleable(),
                 Tables\Columns\TextColumn::make('ticketStatus.name')
                     ->sortable(),
