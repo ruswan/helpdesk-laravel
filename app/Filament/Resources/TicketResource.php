@@ -150,11 +150,17 @@ class TicketResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('title'),
+                Tables\Columns\TextColumn::make('title')
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime(),
-                Tables\Columns\TextColumn::make('problemCategory.name'),
-                Tables\Columns\TextColumn::make('ticketStatus.name'),
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(),
+                Tables\Columns\TextColumn::make('problemCategory.name')
+                    ->searchable()
+                    ->toggleable(),
+                Tables\Columns\TextColumn::make('ticketStatus.name')
+                    ->sortable(),
             ])
             ->filters([
                 Tables\Filters\TrashedFilter::make(),
