@@ -188,14 +188,20 @@ class TicketResource extends Resource
         ];
     }
 
+    /**
+     * Display tickets based on each role
+     *
+     * If it is a Super Admin, then display all tickets.
+     * If it is a Admin Unit, then display tickets based on the tickets they have created and their unit id.
+     * If it is a Staff Unit, then display tickets based on the tickets they have created and the tickets assigned to them.
+     * If it is a Regular User, then display tickets based on the tickets they have created.
+     */
     public static function getEloquentQuery(): Builder
     {
         return parent::getEloquentQuery()
-            ->withoutGlobalScopes([
-                SoftDeletingScope::class,
-            ])
             ->where(function ($query) {
 
+                // Display all tickets to Super Admin
                 if (auth()->user()->hasRole('Super Admin')) {
                     return true;
                 }
@@ -207,6 +213,9 @@ class TicketResource extends Resource
                 } else {
                     $query->where('tickets.owner_id',  auth()->id());
                 }
-            });
+            })
+            ->withoutGlobalScopes([
+                SoftDeletingScope::class,
+            ]);
     }
 }
