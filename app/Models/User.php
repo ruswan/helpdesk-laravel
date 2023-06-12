@@ -78,23 +78,57 @@ class User extends Authenticatable implements FilamentUser
         'is_active'
     ];
 
+    /**
+     * Get the unit that owns the User
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function unit()
     {
         return $this->belongsTo(Unit::class);
     }
 
+    /**
+     * Get all of the comments for the User
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function comments()
     {
         return $this->hasMany(Comment::class);
     }
 
+    /**
+     * Get all of the tickets for the User
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function tickets()
     {
         return $this->hasMany(Ticket::class, 'responsible_id');
     }
 
+    /**
+     * Determine who has access
+     *
+     * All users can access
+     *
+     * @return bool
+     */
     public function canAccessFilament(): bool
     {
         return true;
+    }
+
+    /**
+     * Add scope to display users based on their role
+     *
+     * If the role is as an admin unit, then display the user based on their unit ID.
+     */
+    public function scopeByRole($query)
+    {
+        if (auth()->user()->hasRole('Admin Unit')) {
+            return $query->where('users.unit_id', auth()->user()->unit_id);
+        }
     }
 }

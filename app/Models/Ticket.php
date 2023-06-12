@@ -67,36 +67,71 @@ class Ticket extends Model
         'solved_at'
     ];
 
+    /**
+     * Get the priority that owns the Ticket
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function priority()
     {
         return $this->belongsTo(Priority::class);
     }
 
+    /**
+     * Get the unit that owns the Ticket
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function unit()
     {
         return $this->belongsTo(Unit::class);
     }
 
+    /**
+     * Get the owner that owns the Ticket
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function owner()
     {
         return $this->belongsTo(User::class, 'owner_id');
     }
 
+    /**
+     * Get the responsible that owns the Ticket
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function responsible()
     {
         return $this->belongsTo(User::class, 'responsible_id');
     }
 
+    /**
+     * Get the problemCategory that owns the Ticket
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function problemCategory()
     {
         return $this->belongsTo(ProblemCategory::class);
     }
 
+    /**
+     * Get the ticketStatus that owns the Ticket
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function ticketStatus()
     {
         return $this->belongsTo(TicketStatus::class, 'ticket_statuses_id');
     }
 
+    /**
+     * Get all of the comments for the Ticket
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function comments()
     {
         return $this->hasMany(Comment::class, 'tiket_id');

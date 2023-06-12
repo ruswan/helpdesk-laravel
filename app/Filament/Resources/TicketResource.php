@@ -11,6 +11,7 @@ use App\Models\TicketStatus;
 use App\Models\Unit;
 use App\Models\User;
 use Filament\Forms;
+use Filament\Forms\Components\Card;
 use Filament\Resources\Form;
 use Filament\Resources\Resource;
 use Filament\Resources\Table;
@@ -30,85 +31,139 @@ class TicketResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Select::make('priority_id')
-                    ->label(__('Priority'))
-                    ->options(Priority::all()
-                        ->pluck('name', 'id'))
-                    ->searchable()
-                    ->required(),
 
-                Forms\Components\Select::make('unit_id')
-                    ->label(__('Work Unit'))
-                    ->options(Unit::all()
-                        ->pluck('name', 'id'))
-                    ->searchable()
-                    ->required()
-                    ->afterStateUpdated(function ($state, callable $get, callable $set) {
-                        $unit = Unit::find($state);
-                        if ($unit) {
-                            $problemCategoryId = (int) $get('problem_category_id');
-                            if ($problemCategoryId && $problemCategory = ProblemCategory::find($problemCategoryId)) {
-                                if ($problemCategory->unit_id !== $unit->id) {
-                                    $set('problem_category_id', null);
+                Card::make()->schema([
+
+                    Forms\Components\Select::make('unit_id')
+                        ->label(__('Work Unit'))
+                        ->options(Unit::all()
+                            ->pluck('name', 'id'))
+                        ->searchable()
+                        ->required()
+                        ->afterStateUpdated(function ($state, callable $get, callable $set) {
+                            $unit = Unit::find($state);
+                            if ($unit) {
+                                $problemCategoryId = (int) $get('problem_category_id');
+                                if ($problemCategoryId && $problemCategory = ProblemCategory::find($problemCategoryId)) {
+                                    if ($problemCategory->unit_id !== $unit->id) {
+                                        $set('problem_category_id', null);
+                                    }
                                 }
                             }
-                        }
-                    })
-                    ->reactive(),
+                        })
+                        ->reactive(),
 
-                Forms\Components\Select::make('problem_category_id')
-                    ->label(__('Problem Category'))
-                    ->options(function (callable $get, callable $set) {
-                        $unit = Unit::find($get('unit_id'));
-                        if ($unit) {
-                            return $unit->problemCategories->pluck('name', 'id');
-                        }
-                        return ProblemCategory::all()->pluck('name', 'id');
-                    })
-                    ->searchable()
-                    ->required(),
+                    Forms\Components\Select::make('problem_category_id')
+                        ->label(__('Problem Category'))
+                        ->options(function (callable $get, callable $set) {
+                            $unit = Unit::find($get('unit_id'));
+                            if ($unit) {
+                                return $unit->problemCategories->pluck('name', 'id');
+                            }
+                            return ProblemCategory::all()->pluck('name', 'id');
+                        })
+                        ->searchable()
+                        ->required(),
 
-                Forms\Components\Select::make('ticket_statuses_id')
-                    ->label(__('Status'))
-                    ->options(TicketStatus::all()
-                        ->pluck('name', 'id'))
-                    ->searchable()
-                    ->required()
-                    ->hiddenOn('create'),
+                    Forms\Components\TextInput::make('title')
+                        ->required()
+                        ->maxLength(255)
+                        ->columnSpan([
+                            'sm' => 2,
+                        ]),
 
-                Forms\Components\Select::make('responsible_id')
-                    ->label(__('Responsible'))
-                    ->options(User::all()
-                        ->pluck('name', 'id'))
-                    ->searchable()
-                    ->required()
-                    ->hiddenOn('create'),
+                    Forms\Components\RichEditor::make('description')
+                        ->required()
+                        ->maxLength(65535)
+                        ->columnSpan([
+                            'sm' => 2,
+                        ]),
 
-                Forms\Components\TextInput::make('title')
-                    ->required()
-                    ->maxLength(255),
+                    Forms\Components\Placeholder::make('approved_at')
+                        ->hiddenOn('create')
+                        ->content(fn (
+                            ?Ticket $record
+                        ): string => $record->approved_at ? $record->approved_at->diffForHumans() : '-'),
 
-                Forms\Components\RichEditor::make('description')
-                    ->required()
-                    ->maxLength(65535),
+                    Forms\Components\Placeholder::make('solved_at')
+                        ->hiddenOn('create')
+                        ->content(fn (
+                            ?Ticket $record
+                        ): string => $record->solved_at ? $record->solved_at->diffForHumans() : '-'),
 
-                Forms\Components\DateTimePicker::make('approved_at')
-                    ->hiddenOn('create'),
+                ])->columns([
+                    'sm' => 2,
+                ])->columnSpan(2),
 
-                Forms\Components\DateTimePicker::make('solved_at')
-                    ->hiddenOn('create'),
-            ]);
+                Card::make()->schema([
+
+                    Forms\Components\Select::make('priority_id')
+                        ->label(__('Priority'))
+                        ->options(Priority::all()
+                            ->pluck('name', 'id'))
+                        ->searchable()
+                        ->required(),
+
+                    Forms\Components\Select::make('ticket_statuses_id')
+                        ->label(__('Status'))
+                        ->options(TicketStatus::all()
+                            ->pluck('name', 'id'))
+                        ->searchable()
+                        ->required()
+                        ->hiddenOn('create')
+                        ->hidden(
+                            fn () => !auth()
+                                ->user()
+                                ->hasAnyRole(['Super Admin', 'Admin Unit', 'Staff Unit'])
+                        ),
+
+                    Forms\Components\Select::make('responsible_id')
+                        ->label(__('Responsible'))
+                        ->options(User::ByRole()
+                            ->pluck('name', 'id'))
+                        ->searchable()
+                        ->required()
+                        ->hiddenOn('create')
+                        ->hidden(
+                            fn () => !auth()
+                                ->user()
+                                ->hasAnyRole(['Super Admin', 'Admin Unit'])
+                        ),
+
+                    Forms\Components\Placeholder::make('created_at')
+                        ->content(fn (
+                            ?Ticket $record
+                        ): string => $record ? $record->created_at->diffForHumans() : '-'),
+
+                    Forms\Components\Placeholder::make('updated_at')
+                        ->content(fn (
+                            ?Ticket $record
+                        ): string => $record ? $record->updated_at->diffForHumans() : '-'),
+
+
+                ])->columnSpan(1),
+
+            ])->columns(3);
     }
 
     public static function table(Table $table): Table
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('title'),
+                Tables\Columns\TextColumn::make('title')
+                    ->translateLabel()
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime(),
-                Tables\Columns\TextColumn::make('problemCategory.name'),
-                Tables\Columns\TextColumn::make('ticketStatus.name'),
+                    ->dateTime()
+                    ->translateLabel()
+                    ->sortable()
+                    ->toggleable(),
+                Tables\Columns\TextColumn::make('problemCategory.name')
+                    ->searchable()
+                    ->translateLabel()
+                    ->toggleable(),
+                Tables\Columns\TextColumn::make('ticketStatus.name')
+                    ->sortable(),
             ])
             ->filters([
                 Tables\Filters\TrashedFilter::make(),
@@ -142,14 +197,20 @@ class TicketResource extends Resource
         ];
     }
 
+    /**
+     * Display tickets based on each role
+     *
+     * If it is a Super Admin, then display all tickets.
+     * If it is a Admin Unit, then display tickets based on the tickets they have created and their unit id.
+     * If it is a Staff Unit, then display tickets based on the tickets they have created and the tickets assigned to them.
+     * If it is a Regular User, then display tickets based on the tickets they have created.
+     */
     public static function getEloquentQuery(): Builder
     {
         return parent::getEloquentQuery()
-            ->withoutGlobalScopes([
-                SoftDeletingScope::class,
-            ])
             ->where(function ($query) {
 
+                // Display all tickets to Super Admin
                 if (auth()->user()->hasRole('Super Admin')) {
                     return true;
                 }
@@ -161,6 +222,9 @@ class TicketResource extends Resource
                 } else {
                     $query->where('tickets.owner_id',  auth()->id());
                 }
-            });
+            })
+            ->withoutGlobalScopes([
+                SoftDeletingScope::class,
+            ]);
     }
 }
