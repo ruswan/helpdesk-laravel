@@ -3,10 +3,9 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\TicketResource\Pages;
-use App\Filament\Resources\TicketResource\RelationManagers;
+use App\Models\Priority;
 use App\Models\ProblemCategory;
 use App\Models\Ticket;
-use App\Models\Priority;
 use App\Models\TicketStatus;
 use App\Models\Unit;
 use App\Models\User;
@@ -60,6 +59,7 @@ class TicketResource extends Resource
                             if ($unit) {
                                 return $unit->problemCategories->pluck('name', 'id');
                             }
+
                             return ProblemCategory::all()->pluck('name', 'id');
                         })
                         ->searchable()
@@ -140,7 +140,6 @@ class TicketResource extends Resource
                             ?Ticket $record
                         ): string => $record ? $record->updated_at->diffForHumans() : '-'),
 
-
                 ])->columnSpan(1),
 
             ])->columns(3);
@@ -177,7 +176,7 @@ class TicketResource extends Resource
                 Tables\Actions\ForceDeleteBulkAction::make(),
                 Tables\Actions\RestoreBulkAction::make(),
             ])
-            ->defaultSort('created_at', 'desc');;
+            ->defaultSort('created_at', 'desc');
     }
 
     public static function getRelations(): array
@@ -198,7 +197,7 @@ class TicketResource extends Resource
     }
 
     /**
-     * Display tickets based on each role
+     * Display tickets based on each role.
      *
      * If it is a Super Admin, then display all tickets.
      * If it is a Admin Unit, then display tickets based on the tickets they have created and their unit id.
@@ -216,11 +215,11 @@ class TicketResource extends Resource
                 }
 
                 if (auth()->user()->hasRole('Admin Unit')) {
-                    $query->where('tickets.unit_id',  auth()->user()->unit_id)->orWhere('tickets.owner_id',  auth()->id());
+                    $query->where('tickets.unit_id', auth()->user()->unit_id)->orWhere('tickets.owner_id', auth()->id());
                 } elseif (auth()->user()->hasRole('Staff Unit')) {
-                    $query->where('tickets.responsible_id',  auth()->id())->orWhere('tickets.owner_id',  auth()->id());
+                    $query->where('tickets.responsible_id', auth()->id())->orWhere('tickets.owner_id', auth()->id());
                 } else {
-                    $query->where('tickets.owner_id',  auth()->id());
+                    $query->where('tickets.owner_id', auth()->id());
                 }
             })
             ->withoutGlobalScopes([

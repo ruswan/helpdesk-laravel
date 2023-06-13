@@ -6,12 +6,12 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * Class ProblemCategory
+ * Class ProblemCategory.
  *
  * @property int $id
  * @property int $unit_id
@@ -19,8 +19,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  *
  * @property Unit $unit
  * @property Collection|Ticket[] $tickets
- *
- * @package App\Models
  */
 class ProblemCategory extends Model
 {
@@ -30,12 +28,12 @@ class ProblemCategory extends Model
     public $timestamps = false;
 
     protected $casts = [
-        'unit_id' => 'int'
+        'unit_id' => 'int',
     ];
 
     protected $fillable = [
         'unit_id',
-        'name'
+        'name',
     ];
 
     public function unit()

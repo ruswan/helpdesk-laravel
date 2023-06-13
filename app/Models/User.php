@@ -6,18 +6,17 @@
 
 namespace App\Models;
 
+use Althinect\FilamentSpatieRolesPermissions\Concerns\HasSuperAdmin;
 use Carbon\Carbon;
-use Spatie\Permission\Traits\HasRoles;
-use Illuminate\Database\Eloquent\Model;
 use Filament\Models\Contracts\FilamentUser;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Althinect\FilamentSpatieRolesPermissions\Concerns\HasSuperAdmin;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Spatie\Permission\Traits\HasRoles;
 
 /**
- * Class User
+ * Class User.
  *
  * @property int $id
  * @property int|null $unit_id
@@ -40,8 +39,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property Unit|null $unit
  * @property Collection|Comment[] $comments
  * @property Collection|Ticket[] $tickets
- *
- * @package App\Models
  */
 class User extends Authenticatable implements FilamentUser
 {
@@ -53,13 +50,13 @@ class User extends Authenticatable implements FilamentUser
         'email_verified_at' => 'datetime',
         'two_factor_confirmed_at' => 'datetime',
         'user_level_id' => 'int',
-        'is_active' => 'bool'
+        'is_active' => 'bool',
     ];
 
     protected $hidden = [
         'password',
         'two_factor_secret',
-        'remember_token'
+        'remember_token',
     ];
 
     protected $fillable = [
@@ -75,11 +72,11 @@ class User extends Authenticatable implements FilamentUser
         'identity',
         'phone',
         'user_level_id',
-        'is_active'
+        'is_active',
     ];
 
     /**
-     * Get the unit that owns the User
+     * Get the unit that owns the User.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
@@ -89,7 +86,7 @@ class User extends Authenticatable implements FilamentUser
     }
 
     /**
-     * Get all of the comments for the User
+     * Get all of the comments for the User.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
@@ -99,7 +96,7 @@ class User extends Authenticatable implements FilamentUser
     }
 
     /**
-     * Get all of the tickets for the User
+     * Get all of the tickets for the User.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
@@ -109,7 +106,7 @@ class User extends Authenticatable implements FilamentUser
     }
 
     /**
-     * Determine who has access
+     * Determine who has access.
      *
      * All users can access
      *
@@ -121,7 +118,7 @@ class User extends Authenticatable implements FilamentUser
     }
 
     /**
-     * Add scope to display users based on their role
+     * Add scope to display users based on their role.
      *
      * If the role is as an admin unit, then display the user based on their unit ID.
      */

@@ -22,6 +22,7 @@
         "barryvdh/laravel-debugbar": "^3.8",
         "doctrine/dbal": "^3.6",
         "fakerphp/faker": "^1.9.1",
+        "friendsofphp/php-cs-fixer": "^3.17",
         "kitloong/laravel-migrations-generator": "^6.10",
         "laravel/pint": "^1.0",
         "laravel/sail": "^1.18",
@@ -73,5 +74,11 @@
         }
     },
     "minimum-stability": "stable",
-    "prefer-stable": true
+    "prefer-stable": true,
+    "sniff": [
+        "./vendor/bin/php-cs-fixer fix -vvv --dry-run --show-progress=dots"
+   ],
+   "lint": [
+       "./vendor/bin/php-cs-fixer fix -vvv --show-progress=dots"
+   ]
 }

@@ -10,14 +10,12 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Class Priority
+ * Class Priority.
  *
  * @property int $id
  * @property string $name
  *
  * @property Collection|Ticket[] $tickets
- *
- * @package App\Models
  */
 class Priority extends Model
 {
@@ -32,7 +30,7 @@ class Priority extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'name'
+        'name',
     ];
 
     public function tickets()

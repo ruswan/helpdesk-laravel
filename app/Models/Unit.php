@@ -6,12 +6,12 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * Class Unit
+ * Class Unit.
  *
  * @property int $id
  * @property string $name
@@ -19,8 +19,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property Collection|ProblemCategory[] $problem_categories
  * @property Collection|Ticket[] $tickets
  * @property Collection|User[] $users
- *
- * @package App\Models
  */
 class Unit extends Model
 {
@@ -30,7 +28,7 @@ class Unit extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'name'
+        'name',
     ];
 
     public function problemCategories()
