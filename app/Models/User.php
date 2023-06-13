@@ -117,11 +117,11 @@ class User extends Authenticatable implements FilamentUser
     /**
      * Determine who has access.
      *
-     * All users can access
+     * Only active users can access the filament
      */
     public function canAccessFilament(): bool
     {
-        return true;
+        return auth()->user()->is_active;
     }
 
     /**
