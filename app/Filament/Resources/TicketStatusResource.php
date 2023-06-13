@@ -3,6 +3,7 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\TicketStatusResource\Pages;
+use App\Filament\Resources\TicketStatusResource\RelationManagers\TicketsRelationManager;
 use App\Models\TicketStatus;
 use Filament\Forms;
 use Filament\Resources\Form;
@@ -57,6 +58,7 @@ class TicketStatusResource extends Resource
     public static function getRelations(): array
     {
         return [
+            TicketsRelationManager::class,
         ];
     }
 
