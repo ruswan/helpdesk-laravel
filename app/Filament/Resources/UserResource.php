@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\UserResource\Pages;
 use App\Filament\Resources\UserResource\RelationManagers\RolesRelationManager;
+use App\Filament\Resources\UserResource\RelationManagers\TicketsRelationManager;
 use App\Models\Unit;
 use App\Models\User;
 use Filament\Forms;
@@ -85,6 +86,7 @@ class UserResource extends Resource
     {
         return [
             RolesRelationManager::class,
+            TicketsRelationManager::class,
         ];
     }
 
