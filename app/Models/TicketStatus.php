@@ -8,6 +8,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * Class TicketStatus.
@@ -18,6 +19,8 @@ use Illuminate\Database\Eloquent\Model;
  */
 class TicketStatus extends Model
 {
+    use SoftDeletes;
+
     public const OPEN = 1;
     public const ASSIGNED = 2;
     public const IN_PROGRESS = 3;
