@@ -3,6 +3,7 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\TicketResource\Pages;
+use App\Filament\Resources\TicketResource\RelationManagers\CommentsRelationManager;
 use App\Models\Priority;
 use App\Models\ProblemCategory;
 use App\Models\Ticket;
@@ -178,6 +179,7 @@ class TicketResource extends Resource
     public static function getRelations(): array
     {
         return [
+            CommentsRelationManager::class,
         ];
     }
 

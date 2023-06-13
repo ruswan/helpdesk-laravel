@@ -2,7 +2,6 @@
 
 namespace App\Policies;
 
-use Illuminate\Auth\Access\Response;
 use App\Models\Comment;
 use App\Models\User;
 
@@ -13,7 +12,7 @@ class CommentPolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->can('view-any Comment');
+        return true;
     }
 
     /**
@@ -21,7 +20,7 @@ class CommentPolicy
      */
     public function view(User $user, Comment $comment): bool
     {
-        return $user->can('view Comment');
+        return true;
     }
 
     /**
@@ -29,7 +28,7 @@ class CommentPolicy
      */
     public function create(User $user): bool
     {
-        return $user->can('create Comment');
+        return true;
     }
 
     /**
@@ -37,7 +36,7 @@ class CommentPolicy
      */
     public function update(User $user, Comment $comment): bool
     {
-        return $user->can('update Comment');
+        return true;
     }
 
     /**
