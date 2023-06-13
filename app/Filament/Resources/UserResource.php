@@ -29,7 +29,8 @@ class UserResource extends Resource
             ->schema([
                 Forms\Components\Select::make('unit_id')
                     ->options(Unit::all()
-                        ->pluck('name', 'id')),
+                        ->pluck('name', 'id'))
+                    ->searchable(),
                 Forms\Components\TextInput::make('name')
                     ->required()
                     ->maxLength(255),
