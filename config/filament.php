@@ -1,20 +1,19 @@
 <?php
 
-use Filament\Widgets;
 use App\Filament\Pages\Dashboard;
 use Filament\Http\Middleware\Authenticate;
-use Illuminate\Session\Middleware\StartSession;
+use Filament\Http\Middleware\DispatchServingFilamentEvent;
+use Filament\Http\Middleware\MirrorConfigToSubpackages;
+use Filament\Widgets;
+use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Illuminate\Cookie\Middleware\EncryptCookies;
+use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\AuthenticateSession;
+use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
-use Filament\Http\Middleware\MirrorConfigToSubpackages;
-use Filament\Http\Middleware\DispatchServingFilamentEvent;
-use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
-use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 
 return [
-
     /*
     |--------------------------------------------------------------------------
     | Filament Path
@@ -180,7 +179,7 @@ return [
     */
 
     'database_notifications' => [
-        'enabled' => false,
+        'enabled' => true,
         'polling_interval' => '30s',
     ],
 
@@ -197,14 +196,12 @@ return [
     */
 
     'broadcasting' => [
-
         // 'echo' => [
         //     'broadcaster' => 'pusher',
         //     'key' => env('VITE_PUSHER_APP_KEY'),
         //     'cluster' => env('VITE_PUSHER_APP_CLUSTER'),
         //     'forceTLS' => true,
         // ],
-
     ],
 
     /*
@@ -328,5 +325,4 @@ return [
             MirrorConfigToSubpackages::class,
         ],
     ],
-
 ];

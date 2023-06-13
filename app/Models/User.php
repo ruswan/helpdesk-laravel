@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
 
 /**
@@ -41,7 +42,7 @@ use Spatie\Permission\Traits\HasRoles;
  */
 class User extends Authenticatable implements FilamentUser
 {
-    use SoftDeletes, HasRoles, HasSuperAdmin, HasFactory;
+    use SoftDeletes, HasRoles, HasSuperAdmin, HasFactory, Notifiable;
     protected $table = 'users';
 
     protected $casts = [
