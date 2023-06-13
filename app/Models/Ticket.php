@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * Class Ticket
+ * Class Ticket.
  *
  * @property int $id
  * @property int $priority_id
@@ -22,21 +22,18 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string $title
  * @property string $description
  * @property int $ticket_statuses_id
- * @property int|null $responsible_id
- * @property Carbon|null $created_at
- * @property Carbon|null $updated_at
- * @property Carbon|null $approved_at
- * @property Carbon|null $solved_at
- * @property string|null $deleted_at
- *
+ * @property null|int $responsible_id
+ * @property null|Carbon $created_at
+ * @property null|Carbon $updated_at
+ * @property null|Carbon $approved_at
+ * @property null|Carbon $solved_at
+ * @property null|string $deleted_at
  * @property Priority $priority
  * @property Unit $unit
- * @property User|null $user
+ * @property null|User $user
  * @property ProblemCategory $problem_category
  * @property TicketStatus $ticket_status
  * @property Collection|Comment[] $comments
- *
- * @package App\Models
  */
 class Ticket extends Model
 {
@@ -51,7 +48,7 @@ class Ticket extends Model
         'ticket_statuses_id' => 'int',
         'responsible_id' => 'int',
         'approved_at' => 'datetime',
-        'solved_at' => 'datetime'
+        'solved_at' => 'datetime',
     ];
 
     protected $fillable = [
@@ -64,11 +61,11 @@ class Ticket extends Model
         'ticket_statuses_id',
         'responsible_id',
         'approved_at',
-        'solved_at'
+        'solved_at',
     ];
 
     /**
-     * Get the priority that owns the Ticket
+     * Get the priority that owns the Ticket.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
@@ -78,7 +75,7 @@ class Ticket extends Model
     }
 
     /**
-     * Get the unit that owns the Ticket
+     * Get the unit that owns the Ticket.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
@@ -88,7 +85,7 @@ class Ticket extends Model
     }
 
     /**
-     * Get the owner that owns the Ticket
+     * Get the owner that owns the Ticket.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
@@ -98,7 +95,7 @@ class Ticket extends Model
     }
 
     /**
-     * Get the responsible that owns the Ticket
+     * Get the responsible that owns the Ticket.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
@@ -108,7 +105,7 @@ class Ticket extends Model
     }
 
     /**
-     * Get the problemCategory that owns the Ticket
+     * Get the problemCategory that owns the Ticket.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
@@ -118,7 +115,7 @@ class Ticket extends Model
     }
 
     /**
-     * Get the ticketStatus that owns the Ticket
+     * Get the ticketStatus that owns the Ticket.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
@@ -128,7 +125,7 @@ class Ticket extends Model
     }
 
     /**
-     * Get all of the comments for the Ticket
+     * Get all of the comments for the Ticket.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */

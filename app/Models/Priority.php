@@ -10,19 +10,14 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Class Priority
+ * Class Priority.
  *
  * @property int $id
  * @property string $name
- *
  * @property Collection|Ticket[] $tickets
- *
- * @package App\Models
  */
 class Priority extends Model
 {
-    protected $table = 'priorities';
-
     public const CRITICAL = 1;
     public const HIGHT = 2;
     public const MEDIUM = 3;
@@ -30,9 +25,10 @@ class Priority extends Model
     public const ENHANCEMENT = 5;
 
     public $timestamps = false;
+    protected $table = 'priorities';
 
     protected $fillable = [
-        'name'
+        'name',
     ];
 
     public function tickets()

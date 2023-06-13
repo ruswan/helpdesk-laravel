@@ -7,8 +7,6 @@ use Filament\Resources\Form;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Resources\Table;
 use Filament\Tables;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class UsersRelationManager extends RelationManager
 {
@@ -23,7 +21,8 @@ class UsersRelationManager extends RelationManager
                 Forms\Components\TextInput::make('name')
                     ->required()
                     ->maxLength(255),
-            ]);
+            ])
+        ;
     }
 
     public static function table(Table $table): Table
@@ -34,7 +33,6 @@ class UsersRelationManager extends RelationManager
                 Tables\Columns\TagsColumn::make('roles.name'),
             ])
             ->filters([
-                //
             ])
             ->headerActions([
                 Tables\Actions\AttachAction::make(),
@@ -44,6 +42,7 @@ class UsersRelationManager extends RelationManager
             ])
             ->bulkActions([
                 Tables\Actions\DetachBulkAction::make(),
-            ]);
+            ])
+        ;
     }
 }

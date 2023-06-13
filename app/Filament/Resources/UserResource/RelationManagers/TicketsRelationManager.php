@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Filament\Resources\ProblemCategoryResource\RelationManagers;
+namespace App\Filament\Resources\UserResource\RelationManagers;
 
+use App\Models\Ticket;
 use Filament\Forms;
 use Filament\Resources\Form;
 use Filament\Resources\RelationManagers\RelationManager;
@@ -29,16 +30,28 @@ class TicketsRelationManager extends RelationManager
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('title'),
-                Tables\Columns\TextColumn::make('owner.name'),
-                Tables\Columns\TextColumn::make('responsible.name'),
-                Tables\Columns\TextColumn::make('ticket_status.name'),
+                Tables\Columns\TextColumn::make('title')
+                    ->translateLabel()
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('created_at')
+                    ->dateTime()
+                    ->translateLabel()
+                    ->sortable()
+                    ->toggleable(),
+                Tables\Columns\TextColumn::make('problemCategory.name')
+                    ->searchable()
+                    ->translateLabel()
+                    ->toggleable(),
+                Tables\Columns\TextColumn::make('ticketStatus.name')
+                    ->sortable(),
             ])
             ->filters([
             ])
             ->headerActions([
             ])
             ->actions([
+                Tables\Actions\ViewAction::make()
+                    ->url(fn (Ticket $record): string => route('filament.resources.tickets.view', $record)),
             ])
             ->bulkActions([
             ])

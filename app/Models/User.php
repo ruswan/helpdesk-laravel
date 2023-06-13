@@ -6,42 +6,38 @@
 
 namespace App\Models;
 
+use Althinect\FilamentSpatieRolesPermissions\Concerns\HasSuperAdmin;
 use Carbon\Carbon;
-use Spatie\Permission\Traits\HasRoles;
-use Illuminate\Database\Eloquent\Model;
 use Filament\Models\Contracts\FilamentUser;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Althinect\FilamentSpatieRolesPermissions\Concerns\HasSuperAdmin;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Spatie\Permission\Traits\HasRoles;
 
 /**
- * Class User
+ * Class User.
  *
  * @property int $id
- * @property int|null $unit_id
+ * @property null|int $unit_id
  * @property string $name
  * @property string $email
- * @property Carbon|null $email_verified_at
- * @property string|null $password
- * @property string|null $two_factor_secret
- * @property string|null $two_factor_recovery_codes
- * @property Carbon|null $two_factor_confirmed_at
- * @property string|null $remember_token
- * @property Carbon|null $created_at
- * @property Carbon|null $updated_at
- * @property string|null $identity
- * @property string|null $phone
- * @property int|null $user_level_id
+ * @property null|Carbon $email_verified_at
+ * @property null|string $password
+ * @property null|string $two_factor_secret
+ * @property null|string $two_factor_recovery_codes
+ * @property null|Carbon $two_factor_confirmed_at
+ * @property null|string $remember_token
+ * @property null|Carbon $created_at
+ * @property null|Carbon $updated_at
+ * @property null|string $identity
+ * @property null|string $phone
+ * @property null|int $user_level_id
  * @property bool $is_active
- * @property string|null $deleted_at
- *
- * @property Unit|null $unit
+ * @property null|string $deleted_at
+ * @property null|Unit $unit
  * @property Collection|Comment[] $comments
  * @property Collection|Ticket[] $tickets
- *
- * @package App\Models
  */
 class User extends Authenticatable implements FilamentUser
 {
@@ -53,13 +49,13 @@ class User extends Authenticatable implements FilamentUser
         'email_verified_at' => 'datetime',
         'two_factor_confirmed_at' => 'datetime',
         'user_level_id' => 'int',
-        'is_active' => 'bool'
+        'is_active' => 'bool',
     ];
 
     protected $hidden = [
         'password',
         'two_factor_secret',
-        'remember_token'
+        'remember_token',
     ];
 
     protected $fillable = [
@@ -75,11 +71,11 @@ class User extends Authenticatable implements FilamentUser
         'identity',
         'phone',
         'user_level_id',
-        'is_active'
+        'is_active',
     ];
 
     /**
-     * Get the unit that owns the User
+     * Get the unit that owns the User.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
@@ -89,7 +85,7 @@ class User extends Authenticatable implements FilamentUser
     }
 
     /**
-     * Get all of the comments for the User
+     * Get all of the comments for the User.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
@@ -99,29 +95,37 @@ class User extends Authenticatable implements FilamentUser
     }
 
     /**
-     * Get all of the tickets for the User
+     * Get all of the tickets for the User.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function tickets()
     {
+        return $this->hasMany(Ticket::class, 'owner_id');
+    }
+
+    /**
+     * Get all of the ticekt responsibility for the User.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function ticektResponsibility()
+    {
         return $this->hasMany(Ticket::class, 'responsible_id');
     }
 
     /**
-     * Determine who has access
+     * Determine who has access.
      *
-     * All users can access
-     *
-     * @return bool
+     * Only active users can access the filament
      */
     public function canAccessFilament(): bool
     {
-        return true;
+        return auth()->user()->is_active;
     }
 
     /**
-     * Add scope to display users based on their role
+     * Add scope to display users based on their role.
      *
      * If the role is as an admin unit, then display the user based on their unit ID.
      */

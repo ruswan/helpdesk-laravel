@@ -5,7 +5,8 @@ return [
         // App\Filament\Resources\Blog\AuthorResource::class,
     ],
     'excludes' => [
-        // App\Filament\Resources\Blog\AuthorResource::class,
+        Althinect\FilamentSpatieRolesPermissions\Resources\PermissionResource::class,
+        Althinect\FilamentSpatieRolesPermissions\Resources\RoleResource::class,
     ],
     'should_convert_count' => true,
     'enable_convert_tooltip' => true,

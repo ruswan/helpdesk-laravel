@@ -2,18 +2,17 @@
 
 namespace App\Filament\Resources;
 
-use Filament\Forms;
-use App\Models\Unit;
-use Filament\Tables;
-use Filament\Resources\Form;
-use Filament\Resources\Table;
+use App\Filament\Resources\ProblemCategoryResource\Pages;
+use App\Filament\Resources\ProblemCategoryResource\RelationManagers\TicketsRelationManager;
 use App\Models\ProblemCategory;
+use App\Models\Unit;
+use Filament\Forms;
+use Filament\Resources\Form;
 use Filament\Resources\Resource;
+use Filament\Resources\Table;
+use Filament\Tables;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
-use App\Filament\Resources\ProblemCategoryResource\Pages;
-use App\Filament\Resources\ProblemCategoryResource\RelationManagers;
-use App\Filament\Resources\ProblemCategoryResource\RelationManagers\TicketsRelationManager;
 
 class ProblemCategoryResource extends Resource
 {
@@ -36,7 +35,8 @@ class ProblemCategoryResource extends Resource
                 Forms\Components\TextInput::make('name')
                     ->required()
                     ->maxLength(255),
-            ]);
+            ])
+        ;
     }
 
     public static function table(Table $table): Table
@@ -60,7 +60,8 @@ class ProblemCategoryResource extends Resource
                 Tables\Actions\DeleteBulkAction::make(),
                 Tables\Actions\ForceDeleteBulkAction::make(),
                 Tables\Actions\RestoreBulkAction::make(),
-            ]);
+            ])
+        ;
     }
 
     public static function getRelations(): array
@@ -87,8 +88,9 @@ class ProblemCategoryResource extends Resource
                 SoftDeletingScope::class,
             ])->where(function ($query) {
                 if (auth()->user()->hasRole('Admin Unit')) {
-                    $query->where('problem_categories.unit_id',  auth()->user()->unit_id);
+                    $query->where('problem_categories.unit_id', auth()->user()->unit_id);
                 }
-            });
+            })
+        ;
     }
 }

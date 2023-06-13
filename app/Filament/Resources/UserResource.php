@@ -2,17 +2,19 @@
 
 namespace App\Filament\Resources;
 
-use Filament\Forms;
-use App\Models\User;
-use Filament\Tables;
-use Filament\Resources\Form;
-use Filament\Resources\Table;
-use Filament\Resources\Resource;
-use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\UserResource\Pages;
+use App\Filament\Resources\UserResource\RelationManagers\RolesRelationManager;
+use App\Filament\Resources\UserResource\RelationManagers\TicketsRelationManager;
+use App\Models\Unit;
+use App\Models\User;
+use Filament\Forms;
+use Filament\Resources\Form;
+use Filament\Resources\Resource;
+use Filament\Resources\Table;
+use Filament\Tables;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use STS\FilamentImpersonate\Tables\Actions\Impersonate;
-use App\Filament\Resources\UserResource\RelationManagers\RolesRelationManager;
 
 class UserResource extends Resource
 {
@@ -26,7 +28,10 @@ class UserResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('unit_id'),
+                Forms\Components\Select::make('unit_id')
+                    ->options(Unit::all()
+                        ->pluck('name', 'id'))
+                    ->searchable(),
                 Forms\Components\TextInput::make('name')
                     ->required()
                     ->maxLength(255),
@@ -46,7 +51,8 @@ class UserResource extends Resource
                     ->maxLength(255),
                 Forms\Components\Toggle::make('is_active')
                     ->required(),
-            ]);
+            ])
+        ;
     }
 
     public static function table(Table $table): Table
@@ -56,8 +62,6 @@ class UserResource extends Resource
                 Tables\Columns\TextColumn::make('name'),
                 Tables\Columns\TextColumn::make('email'),
                 Tables\Columns\TagsColumn::make('roles.name'),
-                Tables\Columns\TextColumn::make('identity'),
-                Tables\Columns\TextColumn::make('phone'),
                 Tables\Columns\IconColumn::make('is_active')
                     ->boolean(),
             ])
@@ -74,13 +78,15 @@ class UserResource extends Resource
                 Tables\Actions\DeleteBulkAction::make(),
                 Tables\Actions\ForceDeleteBulkAction::make(),
                 Tables\Actions\RestoreBulkAction::make(),
-            ]);
+            ])
+        ;
     }
 
     public static function getRelations(): array
     {
         return [
             RolesRelationManager::class,
+            TicketsRelationManager::class,
         ];
     }
 
@@ -99,6 +105,7 @@ class UserResource extends Resource
         return parent::getEloquentQuery()
             ->withoutGlobalScopes([
                 SoftDeletingScope::class,
-            ]);
+            ])
+        ;
     }
 }
