@@ -56,8 +56,6 @@ class UserResource extends Resource
                 Tables\Columns\TextColumn::make('name'),
                 Tables\Columns\TextColumn::make('email'),
                 Tables\Columns\TagsColumn::make('roles.name'),
-                Tables\Columns\TextColumn::make('identity'),
-                Tables\Columns\TextColumn::make('phone'),
                 Tables\Columns\IconColumn::make('is_active')
                     ->boolean(),
             ])
