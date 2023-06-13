@@ -21,7 +21,8 @@ class RolesRelationManager extends RelationManager
                 Forms\Components\TextInput::make('name')
                     ->required()
                     ->maxLength(255),
-            ]);
+            ])
+        ;
     }
 
     public static function table(Table $table): Table
@@ -31,7 +32,6 @@ class RolesRelationManager extends RelationManager
                 Tables\Columns\TextColumn::make('name'),
             ])
             ->filters([
-                //
             ])
             ->headerActions([
                 Tables\Actions\AttachAction::make(),
@@ -41,6 +41,7 @@ class RolesRelationManager extends RelationManager
             ])
             ->bulkActions([
                 Tables\Actions\DetachBulkAction::make(),
-            ]);
+            ])
+        ;
     }
 }

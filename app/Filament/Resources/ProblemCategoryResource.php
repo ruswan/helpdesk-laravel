@@ -35,7 +35,8 @@ class ProblemCategoryResource extends Resource
                 Forms\Components\TextInput::make('name')
                     ->required()
                     ->maxLength(255),
-            ]);
+            ])
+        ;
     }
 
     public static function table(Table $table): Table
@@ -59,7 +60,8 @@ class ProblemCategoryResource extends Resource
                 Tables\Actions\DeleteBulkAction::make(),
                 Tables\Actions\ForceDeleteBulkAction::make(),
                 Tables\Actions\RestoreBulkAction::make(),
-            ]);
+            ])
+        ;
     }
 
     public static function getRelations(): array
@@ -88,6 +90,7 @@ class ProblemCategoryResource extends Resource
                 if (auth()->user()->hasRole('Admin Unit')) {
                     $query->where('problem_categories.unit_id', auth()->user()->unit_id);
                 }
-            });
+            })
+        ;
     }
 }

@@ -19,24 +19,23 @@ use Spatie\Permission\Traits\HasRoles;
  * Class User.
  *
  * @property int $id
- * @property int|null $unit_id
+ * @property null|int $unit_id
  * @property string $name
  * @property string $email
- * @property Carbon|null $email_verified_at
- * @property string|null $password
- * @property string|null $two_factor_secret
- * @property string|null $two_factor_recovery_codes
- * @property Carbon|null $two_factor_confirmed_at
- * @property string|null $remember_token
- * @property Carbon|null $created_at
- * @property Carbon|null $updated_at
- * @property string|null $identity
- * @property string|null $phone
- * @property int|null $user_level_id
+ * @property null|Carbon $email_verified_at
+ * @property null|string $password
+ * @property null|string $two_factor_secret
+ * @property null|string $two_factor_recovery_codes
+ * @property null|Carbon $two_factor_confirmed_at
+ * @property null|string $remember_token
+ * @property null|Carbon $created_at
+ * @property null|Carbon $updated_at
+ * @property null|string $identity
+ * @property null|string $phone
+ * @property null|int $user_level_id
  * @property bool $is_active
- * @property string|null $deleted_at
- *
- * @property Unit|null $unit
+ * @property null|string $deleted_at
+ * @property null|Unit $unit
  * @property Collection|Comment[] $comments
  * @property Collection|Ticket[] $tickets
  */
@@ -109,8 +108,6 @@ class User extends Authenticatable implements FilamentUser
      * Determine who has access.
      *
      * All users can access
-     *
-     * @return bool
      */
     public function canAccessFilament(): bool
     {

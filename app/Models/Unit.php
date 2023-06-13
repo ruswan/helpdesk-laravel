@@ -15,7 +15,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  *
  * @property int $id
  * @property string $name
- *
  * @property Collection|ProblemCategory[] $problem_categories
  * @property Collection|Ticket[] $tickets
  * @property Collection|User[] $users
@@ -23,9 +22,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Unit extends Model
 {
     use SoftDeletes;
+    public $timestamps = false;
 
     protected $table = 'units';
-    public $timestamps = false;
 
     protected $fillable = [
         'name',

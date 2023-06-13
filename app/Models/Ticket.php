@@ -22,16 +22,15 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string $title
  * @property string $description
  * @property int $ticket_statuses_id
- * @property int|null $responsible_id
- * @property Carbon|null $created_at
- * @property Carbon|null $updated_at
- * @property Carbon|null $approved_at
- * @property Carbon|null $solved_at
- * @property string|null $deleted_at
- *
+ * @property null|int $responsible_id
+ * @property null|Carbon $created_at
+ * @property null|Carbon $updated_at
+ * @property null|Carbon $approved_at
+ * @property null|Carbon $solved_at
+ * @property null|string $deleted_at
  * @property Priority $priority
  * @property Unit $unit
- * @property User|null $user
+ * @property null|User $user
  * @property ProblemCategory $problem_category
  * @property TicketStatus $ticket_status
  * @property Collection|Comment[] $comments

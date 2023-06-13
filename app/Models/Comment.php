@@ -17,10 +17,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property int $tiket_id
  * @property int $user_id
  * @property string $comment
- * @property Carbon|null $created_at
- * @property Carbon|null $updated_at
- * @property string|null $deleted_at
- *
+ * @property null|Carbon $created_at
+ * @property null|Carbon $updated_at
+ * @property null|string $deleted_at
  * @property User $user
  * @property Ticket $ticket
  */

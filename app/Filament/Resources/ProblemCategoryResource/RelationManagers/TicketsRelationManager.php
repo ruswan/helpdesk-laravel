@@ -21,7 +21,8 @@ class TicketsRelationManager extends RelationManager
                 Forms\Components\TextInput::make('title')
                     ->required()
                     ->maxLength(255),
-            ]);
+            ])
+        ;
     }
 
     public static function table(Table $table): Table
@@ -34,16 +35,13 @@ class TicketsRelationManager extends RelationManager
                 Tables\Columns\TextColumn::make('ticket_status.name'),
             ])
             ->filters([
-                //
             ])
             ->headerActions([
-                //
             ])
             ->actions([
-                //
             ])
             ->bulkActions([
-                //
-            ]);
+            ])
+        ;
     }
 }

@@ -14,14 +14,10 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @property int $id
  * @property string $name
- *
  * @property Collection|Ticket[] $tickets
  */
 class TicketStatus extends Model
 {
-    protected $table = 'ticket_statuses';
-    public $timestamps = false;
-
     public const OPEN = 1;
     public const ASSIGNED = 2;
     public const IN_PROGRESS = 3;
@@ -30,6 +26,8 @@ class TicketStatus extends Model
     public const PENDING_CUSTOMER_RESPONSE = 6;
     public const RESOLVED = 7;
     public const CLOSED = 8;
+    public $timestamps = false;
+    protected $table = 'ticket_statuses';
 
     protected $fillable = [
         'name',

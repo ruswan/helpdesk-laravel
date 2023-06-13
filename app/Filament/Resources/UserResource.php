@@ -28,8 +28,8 @@ class UserResource extends Resource
         return $form
             ->schema([
                 Forms\Components\Select::make('unit_id')
-                ->options(Unit::all()
-                ->pluck('name', 'id')),
+                    ->options(Unit::all()
+                        ->pluck('name', 'id')),
                 Forms\Components\TextInput::make('name')
                     ->required()
                     ->maxLength(255),
@@ -49,7 +49,8 @@ class UserResource extends Resource
                     ->maxLength(255),
                 Forms\Components\Toggle::make('is_active')
                     ->required(),
-            ]);
+            ])
+        ;
     }
 
     public static function table(Table $table): Table
@@ -75,7 +76,8 @@ class UserResource extends Resource
                 Tables\Actions\DeleteBulkAction::make(),
                 Tables\Actions\ForceDeleteBulkAction::make(),
                 Tables\Actions\RestoreBulkAction::make(),
-            ]);
+            ])
+        ;
     }
 
     public static function getRelations(): array
@@ -100,6 +102,7 @@ class UserResource extends Resource
         return parent::getEloquentQuery()
             ->withoutGlobalScopes([
                 SoftDeletingScope::class,
-            ]);
+            ])
+        ;
     }
 }

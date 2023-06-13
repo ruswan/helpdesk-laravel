@@ -16,16 +16,15 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property int $id
  * @property int $unit_id
  * @property string $name
- *
  * @property Unit $unit
  * @property Collection|Ticket[] $tickets
  */
 class ProblemCategory extends Model
 {
     use SoftDeletes;
+    public $timestamps = false;
 
     protected $table = 'problem_categories';
-    public $timestamps = false;
 
     protected $casts = [
         'unit_id' => 'int',

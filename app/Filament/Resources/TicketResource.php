@@ -30,9 +30,7 @@ class TicketResource extends Resource
     {
         return $form
             ->schema([
-
                 Card::make()->schema([
-
                     Forms\Components\Select::make('unit_id')
                         ->label(__('Work Unit'))
                         ->options(Unit::all()
@@ -82,21 +80,19 @@ class TicketResource extends Resource
                     Forms\Components\Placeholder::make('approved_at')
                         ->hiddenOn('create')
                         ->content(fn (
-                            ?Ticket $record
+                            ?Ticket $record,
                         ): string => $record->approved_at ? $record->approved_at->diffForHumans() : '-'),
 
                     Forms\Components\Placeholder::make('solved_at')
                         ->hiddenOn('create')
                         ->content(fn (
-                            ?Ticket $record
+                            ?Ticket $record,
                         ): string => $record->solved_at ? $record->solved_at->diffForHumans() : '-'),
-
                 ])->columns([
                     'sm' => 2,
                 ])->columnSpan(2),
 
                 Card::make()->schema([
-
                     Forms\Components\Select::make('priority_id')
                         ->label(__('Priority'))
                         ->options(Priority::all()
@@ -112,9 +108,9 @@ class TicketResource extends Resource
                         ->required()
                         ->hiddenOn('create')
                         ->hidden(
-                            fn () => !auth()
+                            fn () => ! auth()
                                 ->user()
-                                ->hasAnyRole(['Super Admin', 'Admin Unit', 'Staff Unit'])
+                                ->hasAnyRole(['Super Admin', 'Admin Unit', 'Staff Unit']),
                         ),
 
                     Forms\Components\Select::make('responsible_id')
@@ -125,24 +121,23 @@ class TicketResource extends Resource
                         ->required()
                         ->hiddenOn('create')
                         ->hidden(
-                            fn () => !auth()
+                            fn () => ! auth()
                                 ->user()
-                                ->hasAnyRole(['Super Admin', 'Admin Unit'])
+                                ->hasAnyRole(['Super Admin', 'Admin Unit']),
                         ),
 
                     Forms\Components\Placeholder::make('created_at')
                         ->content(fn (
-                            ?Ticket $record
+                            ?Ticket $record,
                         ): string => $record ? $record->created_at->diffForHumans() : '-'),
 
                     Forms\Components\Placeholder::make('updated_at')
                         ->content(fn (
-                            ?Ticket $record
+                            ?Ticket $record,
                         ): string => $record ? $record->updated_at->diffForHumans() : '-'),
-
                 ])->columnSpan(1),
-
-            ])->columns(3);
+            ])->columns(3)
+        ;
     }
 
     public static function table(Table $table): Table
@@ -176,13 +171,13 @@ class TicketResource extends Resource
                 Tables\Actions\ForceDeleteBulkAction::make(),
                 Tables\Actions\RestoreBulkAction::make(),
             ])
-            ->defaultSort('created_at', 'desc');
+            ->defaultSort('created_at', 'desc')
+        ;
     }
 
     public static function getRelations(): array
     {
         return [
-            //
         ];
     }
 
@@ -208,7 +203,6 @@ class TicketResource extends Resource
     {
         return parent::getEloquentQuery()
             ->where(function ($query) {
-
                 // Display all tickets to Super Admin
                 if (auth()->user()->hasRole('Super Admin')) {
                     return true;
@@ -224,6 +218,7 @@ class TicketResource extends Resource
             })
             ->withoutGlobalScopes([
                 SoftDeletingScope::class,
-            ]);
+            ])
+        ;
     }
 }

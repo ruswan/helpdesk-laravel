@@ -14,13 +14,10 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @property int $id
  * @property string $name
- *
  * @property Collection|Ticket[] $tickets
  */
 class Priority extends Model
 {
-    protected $table = 'priorities';
-
     public const CRITICAL = 1;
     public const HIGHT = 2;
     public const MEDIUM = 3;
@@ -28,6 +25,7 @@ class Priority extends Model
     public const ENHANCEMENT = 5;
 
     public $timestamps = false;
+    protected $table = 'priorities';
 
     protected $fillable = [
         'name',
