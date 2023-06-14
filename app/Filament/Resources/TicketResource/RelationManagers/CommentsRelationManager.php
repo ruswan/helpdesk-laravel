@@ -5,6 +5,7 @@ namespace App\Filament\Resources\TicketResource\RelationManagers;
 use App\Filament\Resources\TicketResource;
 use App\Models\User;
 use Filament\Forms;
+use Filament\Forms\Components\Card;
 use Filament\Notifications\Actions\Action;
 use Filament\Notifications\Notification;
 use Filament\Resources\Form;
@@ -31,11 +32,16 @@ class CommentsRelationManager extends RelationManager
     {
         return $form
             ->schema([
-                Forms\Components\RichEditor::make('comment')
-                    ->required()
-                    ->maxLength(255),
-            ])
-        ;
+                Card::make()->schema([
+                    Forms\Components\RichEditor::make('comment')
+                        ->required()
+                        ->maxLength(255),
+                    Forms\Components\FileUpload::make('attachments')
+                        ->directory('comment-attachments/' . date('m-y'))
+                        ->maxSize(2000)
+                        ->enableDownload(),
+                ])
+            ]);
     }
 
     public static function table(Table $table): Table
@@ -58,8 +64,7 @@ class CommentsRelationManager extends RelationManager
                         ->html(),
                 ]),
             ])
-            ->filters([
-            ])
+            ->filters([])
             ->headerActions([
                 Tables\Actions\CreateAction::make()->mutateFormDataUsing(function (array $data): array {
                     $data['user_id'] = auth()->id();
@@ -74,10 +79,10 @@ class CommentsRelationManager extends RelationManager
                             $receiver = $ticket->owner;
                         } else {
                             $receiver = User::whereHas(
-                                'roles', function ($q) {
+                                'roles',
+                                function ($q) {
                                     $q->where('name', 'Admin Unit')
-                                        ->orWhere('name', 'Staf Unit')
-                                    ;
+                                        ->orWhere('name', 'Staf Unit');
                                 },
                             )->get();
                         }
@@ -88,15 +93,15 @@ class CommentsRelationManager extends RelationManager
                                 Action::make('Lihat')
                                     ->url(TicketResource::getUrl('view', ['record' => $ticket->id])),
                             ])
-                            ->sendToDatabase($receiver)
-                        ;
+                            ->sendToDatabase($receiver);
                     }),
             ])
             ->actions([
+                Tables\Actions\Action::make('attachment')->action(function ($record) {
+                    return response()->download('storage/' . $record->attachments);
+                })->hidden(fn ($record) => $record->attachments == ''),
                 Tables\Actions\EditAction::make(),
             ])
-            ->bulkActions([
-            ])
-        ;
+            ->bulkActions([]);
     }
 }
