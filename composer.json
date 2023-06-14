@@ -11,12 +11,14 @@
         "php": "^8.1",
         "althinect/filament-spatie-roles-permissions": "^1.2",
         "awcodes/overlook": "^1.2",
+        "dutchcodingcompany/filament-socialite": "^0.2.5",
         "filament/filament": "^2.0",
         "guzzlehttp/guzzle": "^7.2",
         "jeffgreco13/filament-breezy": "^1.5",
         "laravel/framework": "^10.10",
         "laravel/sanctum": "^3.2",
         "laravel/tinker": "^2.8",
+        "owenvoke/blade-fontawesome": "^2.3",
         "stechstudio/filament-impersonate": "^2.18"
     },
     "require-dev": {
