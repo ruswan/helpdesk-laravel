@@ -18,10 +18,10 @@ return [
             'label' => 'Google',
             'icon' => 'fab-google',
         ],
-        'github' => [
-            'label' => 'GitHub',
-            'icon' => 'fab-github',
-        ],
+        // 'github' => [
+        //     'label' => 'GitHub',
+        //     'icon' => 'fab-github',
+        // ],
     ],
 
     'user_model' => \App\Models\User::class,

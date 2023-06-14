@@ -137,4 +137,14 @@ class User extends Authenticatable implements FilamentUser, MustVerifyEmail
             return $query->where('users.unit_id', auth()->user()->unit_id);
         }
     }
+
+    /**
+     * Get all of the socialiteUsers for the User
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function socialiteUsers()
+    {
+        return $this->hasMany(SocialiteUser::class);
+    }
 }
