@@ -37,6 +37,7 @@ class Comment extends Model
         'tiket_id',
         'user_id',
         'comment',
+        'attachments',
     ];
 
     public function user()
