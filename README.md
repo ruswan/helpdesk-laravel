@@ -37,3 +37,18 @@ Feel free to explore this repository and start building a robust and responsive 
 * Run the dev server: `php artisan serve`
 
 <hr/>
+
+## Dummy Account
+### Super Admin
+> - Email: superadmin@example.com
+> - Password: password
+### Admin Unit
+> - Email: adminunit@example.com
+> - Password: password
+### Staff Unit
+> - Email: staffunit@example.com
+> - Password: password
+### General User
+> - Email: user@example.com
+> - Password: password
+
