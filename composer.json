@@ -23,6 +23,7 @@
         "stechstudio/filament-impersonate": "^2.18"
     },
     "require-dev": {
+        "andyabih/laravel-to-uml": "^1.0",
         "barryvdh/laravel-debugbar": "^3.8",
         "doctrine/dbal": "^3.6",
         "fakerphp/faker": "^1.9.1",
