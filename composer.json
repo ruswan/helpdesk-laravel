@@ -11,6 +11,7 @@
         "php": "^8.1",
         "althinect/filament-spatie-roles-permissions": "^1.2",
         "awcodes/overlook": "^1.2",
+        "bezhansalleh/filament-language-switch": "^1.0",
         "dutchcodingcompany/filament-socialite": "^0.2.5",
         "filament/filament": "^2.0",
         "guzzlehttp/guzzle": "^7.2",
