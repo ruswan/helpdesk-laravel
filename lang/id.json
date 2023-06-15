@@ -1,7 +1,10 @@
 {
+    "Ticket": "Ticket",
+    "Tickets": "Tiket",
+    "Name": "Nama",
+    "Title": "Judul",
     "Work Unit": "Unit Kerja",
     "Problem Category": "Kategori Masalah",
-    "Title": "Judul",
     "Description": "Deskripsi",
     "Priority": "Prioritas",
     "Created at": "Dibuat pada",
@@ -9,5 +12,7 @@
     "Approved at": "Diterima pada",
     "Solved at": "Diselesaikan pada",
     "Status": "Status",
-    "Responsible": "Penanggungjawab"
+    "Responsible": "Penanggungjawab",
+    "Tickets Count": "Jumlah Tiket",
+    "Ticket Statuses ": "Status Tiket"
 }

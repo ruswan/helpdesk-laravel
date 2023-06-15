@@ -15,17 +15,6 @@ class TicketsRelationManager extends RelationManager
 
     protected static ?string $recordTitleAttribute = 'title';
 
-    public static function form(Form $form): Form
-    {
-        return $form
-            ->schema([
-                Forms\Components\TextInput::make('title')
-                    ->required()
-                    ->maxLength(255),
-            ])
-        ;
-    }
-
     public static function table(Table $table): Table
     {
         return $table
@@ -40,21 +29,18 @@ class TicketsRelationManager extends RelationManager
                     ->toggleable(),
                 Tables\Columns\TextColumn::make('problemCategory.name')
                     ->searchable()
-                    ->translateLabel()
+                    ->label(__('Problem Category'))
                     ->toggleable(),
                 Tables\Columns\TextColumn::make('ticketStatus.name')
+                    ->label('Status')
                     ->sortable(),
             ])
-            ->filters([
-            ])
-            ->headerActions([
-            ])
+            ->filters([])
+            ->headerActions([])
             ->actions([
                 Tables\Actions\ViewAction::make()
                     ->url(fn (Ticket $record): string => route('filament.resources.tickets.view', $record)),
             ])
-            ->bulkActions([
-            ])
-        ;
+            ->bulkActions([]);
     }
 }

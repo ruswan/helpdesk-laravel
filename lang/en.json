@@ -1,7 +1,10 @@
 {
+    "Ticket": "Tiket",
+    "Tickets": "Tikets",
+    "Name": "Name",
+    "Title": "Title",
     "Work Unit": "Work Unit",
     "Problem Category": "Problem Category",
-    "Title": "Title",
     "Description": "Description",
     "Priority": "Priority",
     "Created at": "Created at",
@@ -9,5 +12,7 @@
     "Approved at": "Approved at",
     "Solved at": "Solved at",
     "Status": "Status",
-    "Responsible": "Responsible"
+    "Responsible": "Responsible",
+    "Tickets Count": "Tickets Count",
+    "Ticket Statuses ": "Ticket Statuses"
 }

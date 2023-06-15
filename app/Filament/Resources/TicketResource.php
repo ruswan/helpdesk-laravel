@@ -227,4 +227,9 @@ class TicketResource extends Resource
                 SoftDeletingScope::class,
             ]);
     }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('Tickets');
+    }
 }
