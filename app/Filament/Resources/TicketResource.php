@@ -65,6 +65,7 @@ class TicketResource extends Resource
                         ->required(),
 
                     Forms\Components\TextInput::make('title')
+                        ->label(__('Title'))
                         ->required()
                         ->maxLength(255)
                         ->columnSpan([
@@ -72,6 +73,7 @@ class TicketResource extends Resource
                         ]),
 
                     Forms\Components\RichEditor::make('description')
+                        ->label(__('Description'))
                         ->required()
                         ->maxLength(65535)
                         ->columnSpan([
@@ -79,12 +81,14 @@ class TicketResource extends Resource
                         ]),
 
                     Forms\Components\Placeholder::make('approved_at')
+                        ->translateLabel()
                         ->hiddenOn('create')
                         ->content(fn (
                             ?Ticket $record,
                         ): string => $record->approved_at ? $record->approved_at->diffForHumans() : '-'),
 
                     Forms\Components\Placeholder::make('solved_at')
+                        ->translateLabel()
                         ->hiddenOn('create')
                         ->content(fn (
                             ?Ticket $record,
@@ -109,7 +113,7 @@ class TicketResource extends Resource
                         ->required()
                         ->hiddenOn('create')
                         ->hidden(
-                            fn () => ! auth()
+                            fn () => !auth()
                                 ->user()
                                 ->hasAnyRole(['Super Admin', 'Admin Unit', 'Staff Unit']),
                         ),
@@ -122,23 +126,24 @@ class TicketResource extends Resource
                         ->required()
                         ->hiddenOn('create')
                         ->hidden(
-                            fn () => ! auth()
+                            fn () => !auth()
                                 ->user()
                                 ->hasAnyRole(['Super Admin', 'Admin Unit']),
                         ),
 
                     Forms\Components\Placeholder::make('created_at')
+                        ->translateLabel()
                         ->content(fn (
                             ?Ticket $record,
                         ): string => $record ? $record->created_at->diffForHumans() : '-'),
 
                     Forms\Components\Placeholder::make('updated_at')
+                        ->translateLabel()
                         ->content(fn (
                             ?Ticket $record,
                         ): string => $record ? $record->updated_at->diffForHumans() : '-'),
                 ])->columnSpan(1),
-            ])->columns(3)
-        ;
+            ])->columns(3);
     }
 
     public static function table(Table $table): Table
@@ -155,9 +160,10 @@ class TicketResource extends Resource
                     ->toggleable(),
                 Tables\Columns\TextColumn::make('problemCategory.name')
                     ->searchable()
-                    ->translateLabel()
+                    ->label(__('Problem Category'))
                     ->toggleable(),
                 Tables\Columns\TextColumn::make('ticketStatus.name')
+                    ->label(__('Status'))
                     ->sortable(),
             ])
             ->filters([
@@ -172,8 +178,7 @@ class TicketResource extends Resource
                 Tables\Actions\ForceDeleteBulkAction::make(),
                 Tables\Actions\RestoreBulkAction::make(),
             ])
-            ->defaultSort('created_at', 'desc')
-        ;
+            ->defaultSort('created_at', 'desc');
     }
 
     public static function getRelations(): array
@@ -220,7 +225,11 @@ class TicketResource extends Resource
             })
             ->withoutGlobalScopes([
                 SoftDeletingScope::class,
-            ])
-        ;
+            ]);
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('Tickets');
     }
 }

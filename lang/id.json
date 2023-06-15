@@ -1,0 +1,20 @@
+{
+    "Ticket": "Ticket",
+    "Tickets": "Tiket",
+    "Name": "Nama",
+    "Title": "Judul",
+    "Work Unit": "Unit Kerja",
+    "Problem Category": "Kategori Masalah",
+    "Description": "Deskripsi",
+    "Priority": "Prioritas",
+    "Created at": "Dibuat pada",
+    "Updated at": "Diperbarui pada",
+    "Approved at": "Diterima pada",
+    "Solved at": "Diselesaikan pada",
+    "Status": "Status",
+    "Ticket Status": "Status Tiket",
+    "Responsible": "Penanggungjawab",
+    "Tickets Count": "Jumlah Tiket",
+    "Ticket Statuses ": "Status Tiket",
+    "Owner": "Pemilik"
+}

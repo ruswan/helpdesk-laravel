@@ -33,10 +33,10 @@ class ProblemCategoryResource extends Resource
                     ->searchable()
                     ->required(),
                 Forms\Components\TextInput::make('name')
+                    ->translateLabel()
                     ->required()
                     ->maxLength(255),
-            ])
-        ;
+            ]);
     }
 
     public static function table(Table $table): Table
@@ -44,10 +44,11 @@ class ProblemCategoryResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('name')
+                    ->translateLabel()
                     ->searchable(),
                 Tables\Columns\TextColumn::make('unit.name')
                     ->searchable()
-                    ->sortable(),
+                    ->label(__('Work Unit')),
             ])
             ->filters([
                 Tables\Filters\TrashedFilter::make(),
@@ -60,8 +61,7 @@ class ProblemCategoryResource extends Resource
                 Tables\Actions\DeleteBulkAction::make(),
                 Tables\Actions\ForceDeleteBulkAction::make(),
                 Tables\Actions\RestoreBulkAction::make(),
-            ])
-        ;
+            ]);
     }
 
     public static function getRelations(): array
@@ -90,7 +90,11 @@ class ProblemCategoryResource extends Resource
                 if (auth()->user()->hasRole('Admin Unit')) {
                     $query->where('problem_categories.unit_id', auth()->user()->unit_id);
                 }
-            })
-        ;
+            });
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('Problem Category');
     }
 }

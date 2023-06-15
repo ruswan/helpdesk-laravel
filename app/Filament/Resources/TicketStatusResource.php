@@ -26,10 +26,10 @@ class TicketStatusResource extends Resource
         return $form
             ->schema([
                 Forms\Components\TextInput::make('name')
+                    ->translateLabel()
                     ->required()
                     ->maxLength(255),
-            ])
-        ;
+            ]);
     }
 
     public static function table(Table $table): Table
@@ -40,19 +40,17 @@ class TicketStatusResource extends Resource
                     ->label('#'),
 
                 Tables\Columns\TextColumn::make('name')
+                    ->translateLabel()
                     ->searchable(),
 
                 Tables\Columns\TextColumn::make('tickets_count')
                     ->counts('tickets')
+                    ->label(__('Tickets Count'))
                     ->sortable(),
             ])
-            ->filters([
-            ])
-            ->actions([
-            ])
-            ->bulkActions([
-            ])
-        ;
+            ->filters([])
+            ->actions([])
+            ->bulkActions([]);
     }
 
     public static function getRelations(): array
@@ -77,7 +75,11 @@ class TicketStatusResource extends Resource
         return parent::getEloquentQuery()
             ->withoutGlobalScopes([
                 SoftDeletingScope::class,
-            ])
-        ;
+            ]);
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('Ticket Statuses ');
     }
 }
