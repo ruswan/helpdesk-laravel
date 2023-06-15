@@ -21,27 +21,25 @@ class TicketsRelationManager extends RelationManager
                 Forms\Components\TextInput::make('title')
                     ->required()
                     ->maxLength(255),
-            ])
-        ;
+            ]);
     }
 
     public static function table(Table $table): Table
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('title'),
-                Tables\Columns\TextColumn::make('owner.name'),
-                Tables\Columns\TextColumn::make('responsible.name'),
-                Tables\Columns\TextColumn::make('ticket_status.name'),
+                Tables\Columns\TextColumn::make('title')
+                    ->translateLabel(),
+                Tables\Columns\TextColumn::make('owner.name')
+                    ->translateLabel(),
+                Tables\Columns\TextColumn::make('responsible.name')
+                    ->translateLabel(),
+                Tables\Columns\TextColumn::make('ticket_status.name')
+                    ->label(__("Ticket Status")),
             ])
-            ->filters([
-            ])
-            ->headerActions([
-            ])
-            ->actions([
-            ])
-            ->bulkActions([
-            ])
-        ;
+            ->filters([])
+            ->headerActions([])
+            ->actions([])
+            ->bulkActions([]);
     }
 }

@@ -12,7 +12,9 @@
     "Approved at": "Diterima pada",
     "Solved at": "Diselesaikan pada",
     "Status": "Status",
+    "Ticket Status": "Status Tiket",
     "Responsible": "Penanggungjawab",
     "Tickets Count": "Jumlah Tiket",
-    "Ticket Statuses ": "Status Tiket"
+    "Ticket Statuses ": "Status Tiket",
+    "Owner": "Pemilik"
 }
