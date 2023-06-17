@@ -214,7 +214,7 @@ class TicketResource extends Resource
             ->where(function ($query) {
                 // Display all tickets to Super Admin
                 if (auth()->user()->hasRole('Super Admin')) {
-                    return true;
+                    return;
                 }
 
                 if (auth()->user()->hasRole('Admin Unit')) {
